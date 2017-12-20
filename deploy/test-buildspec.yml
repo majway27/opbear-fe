@@ -2,7 +2,7 @@ version: 0.1
 environment_variables:
     plaintext:
         S3_BUCKET: "test-app.optimisticbearings.majway.com"
-        BUILD_ENV: "prod"
+        BUILD_ENV: "dev"
 phases:
     install:
         commands:
