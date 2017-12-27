@@ -1,0 +1,23 @@
+<div class="row align-items-center">
+  <div class="col-8 well">
+    <div *ngIf="!loggedIn()">
+      <h4>Welcome!</h4>
+      <p>Please sign in or sign up via links in the upper right.</p>
+    </div>
+    <div *ngIf="loggedIn()">
+      <h4>Welcome {{ getMyUser() }}!</h4>
+      <p>Please choose an item from the upper menu bar.</p>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="well">
+    <div class="col-sm">
+      <h4>News</h4>
+      <p>Check out the new look & feel.</p>
+    </div>
+    <div class="col-sm">
+      <code class="bg-primary">v0.1</code>
+    </div>
+  </div>
+</div>

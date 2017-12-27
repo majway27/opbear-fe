@@ -1,0 +1,19 @@
+<div class="login jumbotron center-block">
+    
+    <h1>Email Confirmation</h1>
+    
+     <div class="form-group">
+        <label for="confirmationcode">Enter Emailed Confirmation Code</label>
+        <input [formControl]="confirmationCode" type="text" #confirmationcode class="form-control" id="confirmationcode" placeholder="123456">
+     </div>
+    
+     <div>
+       <button (click)="submitCodeValue()" class="btn btn-default">Submit</button>
+       <button (click)="resetCode()" class="btn btn-default">Reset</button>
+     </div> 
+    
+    <div>
+        <p *ngIf='confirmationCode.value'>Validation Status: <b>{{ confirmationCode.status }}</b></p>
+    </div> 
+    
+</div>

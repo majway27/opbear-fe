@@ -1,0 +1,22 @@
+<div class="login jumbotron center-block">
+    
+    <h1>Sign Up</h1>
+    
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input [formControl]="usernamefc" type="text" #username class="form-control" id="username" placeholder="Username">
+        <label for="password">Password</label>
+        <input [formControl]="passwordfc" type="password" #password class="form-control" id="password" placeholder="Password">
+     </div>
+    
+     <div>
+       <button (click)="submitSignUpValues()" class="btn btn-default">Submit</button>
+       <button (click)="resetSignUp()" class="btn btn-default">Reset</button>
+     </div> 
+    
+    <div>
+        <p *ngIf='usernamefc.value'>Validation Status: <b>{{ usernamefc.status }}</b></p>
+    </div> 
+    
+    
+</div>

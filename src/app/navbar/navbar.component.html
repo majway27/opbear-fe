@@ -1,0 +1,49 @@
+<nav class="navbar navbar-default navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" routerLink="/dashboard" routerLinkActive="active">{{title}}</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            
+            <ul class="nav navbar-nav" *ngIf="loggedIn()">
+                <li><a routerLink="/" routerLinkActive="active">Inventory</a></li>
+                <li><a routerLink="/" routerLinkActive="active">Maintenance</a></li>
+                <li><a routerLink="/" routerLinkActive="active">Live Mode</a></li>
+            </ul>
+            
+            <ul class="nav navbar-nav navbar-right">
+                <!-- <li><a href="#" (click)="loggedIn()">logged in?</a></li> -->
+                <li *ngIf="loggedIn()">
+                    <a routerLink="/profile" routerLinkActive="active">
+                        <span class="glyphicon glyphicon-cog"></span> 
+                        Profile
+                    </a>
+                </li>
+                <li *ngIf="!loggedIn()">
+                    <a routerLink="/signup" routerLinkActive="active">
+                        <span class="glyphicon glyphicon-user"></span> 
+                        Sign Up
+                    </a>
+                </li>
+                <li *ngIf="!loggedIn()">
+                    <a routerLink="/login" routerLinkActive="active">
+                        <span class="glyphicon glyphicon-log-in"></span> 
+                        Login
+                    </a>
+                </li>
+                <li *ngIf="loggedIn()">
+                    <a routerLink="/logout" routerLinkActive="active">
+                        <span class="glyphicon glyphicon-log-out"></span> 
+                        Logout
+                    </a>
+                </li>
+            </ul>
+            
+        </div>
+    </div>
+</nav> 
