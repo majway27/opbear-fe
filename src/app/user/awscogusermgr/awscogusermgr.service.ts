@@ -109,10 +109,10 @@ export class AwscogusermgrService {
         this.cognitoUser.authenticateUser(this.getAuthenticationDetails(), {
             onSuccess: function (result) {
                 
-                localStorage.setItem('jwt_token', result.getAccessToken().getJwtToken());
+                localStorage.setItem('token', result.getAccessToken().getJwtToken());
                 localStorage.setItem('username', myUserPool.getCurrentUser().getUsername());
                 console.log("Localstorage currentuser: " + localStorage.getItem('username'));
-                console.log("Localstorage getitem-jwt: " + localStorage.getItem('jwt_token'));
+                console.log("Localstorage getitem-jwt: " + localStorage.getItem('token'));
 
                 AWSCognito.config.credentials = new AWSCognito.CognitoIdentityCredentials({
                     IdentityPoolId: this.identityPoolId, // your identity pool id here

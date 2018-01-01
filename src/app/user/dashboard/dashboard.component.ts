@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Jwtauthsvchelper } from '../jwtauthsvchelper/jwtauthsvchelper.service';
+
 @Component({
   selector: 'my-dashboard',
   templateUrl: './dashboard.component.html',
@@ -7,16 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent { 
  
-  constructor() { }
+  constructor(private  jwtauthsvchelper:  Jwtauthsvchelper) { }
   
   ngOnInit(): void {
   }
 
   loggedIn() {
-    //console.log("Checking Login Status")
-    //event.preventDefault();
-    if (localStorage.getItem('jwt_token')) {
-      //console.log("Localstorage getitem-jwt: " + localStorage.getItem('jwt_token')); 
+    if (this.jwtauthsvchelper.loggedIn()) {
+      //console.log("Localstorage getitem-jwt: " + localStorage.getItem('token')); 
       return true
     } else {
       return false
@@ -24,11 +24,8 @@ export class DashboardComponent {
   }
   
   getMyUser() {
-    //console.log("Checking Login Status")
-    //event.preventDefault();
-    if (localStorage.getItem('username')) {
-      //console.log("Localstorage getitem-jwt: " + localStorage.getItem('jwt_token')); 
-      return localStorage.getItem('username')
+    if (this.jwtauthsvchelper.getUser()) {
+      return this.jwtauthsvchelper.getUser()
     } else {
       return false
     }

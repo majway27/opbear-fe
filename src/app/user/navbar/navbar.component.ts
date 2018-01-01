@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Jwtauthsvchelper } from '../jwtauthsvchelper/jwtauthsvchelper.service';
+
 @Component({
   selector: 'navbar',
   templateUrl: './navbar.component.html',
@@ -9,16 +11,14 @@ export class NavbarComponent implements OnInit {
 
   title = 'Optimistic Bearings';
 
-  constructor() { }
+  constructor(private  jwtauthsvchelper:  Jwtauthsvchelper) { }
 
   ngOnInit() {
   }
 
   loggedIn() {
-    //console.log("Checking Login Status")
-    //event.preventDefault();
-    if (localStorage.getItem('jwt_token')) {
-      //console.log("Localstorage getitem-jwt: " + localStorage.getItem('jwt_token')); 
+    if (this.jwtauthsvchelper.loggedIn()) {
+      //console.log("Localstorage getitem-jwt: " + localStorage.getItem('token')); 
       return true
     } else {
       return false
@@ -26,11 +26,8 @@ export class NavbarComponent implements OnInit {
   }
   
   getMyUser() {
-    //console.log("Checking Login Status")
-    //event.preventDefault();
-    if (localStorage.getItem('current_user')) {
-      //console.log("Localstorage getitem-jwt: " + localStorage.getItem('jwt_token')); 
-      return localStorage.getItem('current_user')
+    if (this.jwtauthsvchelper.getUser()) {
+      return this.jwtauthsvchelper.getUser()
     } else {
       return false
     }

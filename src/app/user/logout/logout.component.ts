@@ -13,7 +13,7 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit() {
     console.log("Logging Out");
-    localStorage.removeItem('jwt_token');
+    localStorage.removeItem('token');
     localStorage.removeItem('current_user');
     this.router.navigate(['login']);
   }

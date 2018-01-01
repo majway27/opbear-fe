@@ -5,14 +5,18 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule }     from './app-routing.module';
 
 import { AppComponent } from './app.component';
+
 import { AwscogusermgrService } from './user/awscogusermgr/awscogusermgr.service';
+import { Jwtauthsvchelper } from './user/jwtauthsvchelper/jwtauthsvchelper.service';
+
+import { ConfirmationComponent } from './user/confirmation/confirmation.component';
 import { DashboardComponent } from './user/dashboard/dashboard.component';
 import { LoginComponent } from './user/login/login.component';
-import { ProfileComponent } from './user/profile/profile.component';
 import { LogoutComponent } from './user/logout/logout.component';
 import { NavbarComponent } from './user/navbar/navbar.component';
+import { ProfileComponent } from './user/profile/profile.component';
 import { SignupComponent } from './user/signup/signup.component';
-import { ConfirmationComponent } from './user/confirmation/confirmation.component';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +36,7 @@ import { ConfirmationComponent } from './user/confirmation/confirmation.componen
     HttpModule,
     ReactiveFormsModule
   ],
-  providers: [AwscogusermgrService],
+  providers: [AwscogusermgrService,Jwtauthsvchelper],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
