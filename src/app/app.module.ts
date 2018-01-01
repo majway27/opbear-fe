@@ -5,14 +5,14 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule }     from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { AwscogusermgrService } from './awscogusermgr/awscogusermgr.service';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from './profile/profile.component';
-import { LogoutComponent } from './logout/logout.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { SignupComponent } from './signup/signup.component';
-import { ConfirmationComponent } from './confirmation/confirmation.component';
+import { AwscogusermgrService } from './user/awscogusermgr/awscogusermgr.service';
+import { DashboardComponent } from './user/dashboard/dashboard.component';
+import { LoginComponent } from './user/login/login.component';
+import { ProfileComponent } from './user/profile/profile.component';
+import { LogoutComponent } from './user/logout/logout.component';
+import { NavbarComponent } from './user/navbar/navbar.component';
+import { SignupComponent } from './user/signup/signup.component';
+import { ConfirmationComponent } from './user/confirmation/confirmation.component';
 
 @NgModule({
   declarations: [
