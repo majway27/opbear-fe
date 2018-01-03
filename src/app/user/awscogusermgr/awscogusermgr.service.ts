@@ -9,6 +9,8 @@ import { Userprop } from '../userprop/userprop';
 
 @Injectable()
 export class AwscogusermgrService {
+
+    constructor( private http: Http ) {}
     
     region = environment.region;
     poolData = {
@@ -32,8 +34,6 @@ export class AwscogusermgrService {
     
     subject: Subject<Userprop[]> = new Subject<Userprop[]>();
     observableResp = new Array<Userprop>();
-    
-    constructor( private http: Http ) { }
 
     addCognitoUser(username, password): void {
         
@@ -104,34 +104,52 @@ export class AwscogusermgrService {
         this.setPersistentSession();
         
         let myUserPool = this.userPool;  //cognitoUser.authenticateUser() callback support
-        //var myCognitoUser = this.cognitoUser;
-        var my_key = 'cognito-idp.' + this.region + '.amazonaws.com/' + this.poolData.UserPoolId
         this.cognitoUser.authenticateUser(this.getAuthenticationDetails(), {
             onSuccess: function (result) {
                 
                 localStorage.setItem('token', result.getAccessToken().getJwtToken());
                 localStorage.setItem('username', myUserPool.getCurrentUser().getUsername());
-                console.log("Localstorage currentuser: " + localStorage.getItem('username'));
-                console.log("Localstorage getitem-jwt: " + localStorage.getItem('token'));
+                localStorage.setItem('sts_token', result.getIdToken().getJwtToken())
+                //console.log("Localstorage currentuser: " + localStorage.getItem('username'));
 
-                AWSCognito.config.credentials = new AWSCognito.CognitoIdentityCredentials({
-                    IdentityPoolId: this.identityPoolId, // your identity pool id here
-                    Logins : {
+                AWS.config.region = environment.region;
+                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                    IdentityPoolId: environment.identityPoolId,
+                    //Logins : {
+                    Logins: {}
                         // Change the key below according to the specific region your user pool is in.
-                        my_key: result.getIdToken().getJwtToken()
-                    }
+                        //: result.getIdToken().getJwtToken()
+                       //'cognito-idp.us-west-2.amazonaws.com/us-west-2_3O2OnecGV' : result.getIdToken().getJwtToken()
+                       //'cognito-idp.' + environment.region + '.amazonaws.com/' + environment.userPoolId : result.getIdToken().getJwtToken()
+                    //}
                 });
-    
+                let my_key = 'cognito-idp.' + environment.region + '.amazonaws.com/' + environment.userPoolId;
+                AWS.config.credentials.params.Logins[my_key] = result.getIdToken().getJwtToken()
+                //console.log(AWSCognito.config.credentials.params)
+                //console.log("Localstorage getitem-jwt: " + localStorage.getItem('sts_token'))
+                
                 //refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
-                /*AWSCognito.config.credentials.refresh((error) => {
+                AWS.config.credentials.refresh((error) => {
                     if (error) {
                          console.error(error);
                     } else {
-                         // Instantiate aws sdk service objects now that the credentials have been updated.
-                         // example: var s3 = new AWS.S3();
-                         console.log('Successfully logged!');
+                        // Instantiate aws sdk service objects now that the credentials have been updated.
+                        /*var s3 = new AWS.S3();
+                         
+                        var params = {
+                          Bucket: "test-app.optimisticbearings.majway.com", 
+                          MaxKeys: 50
+                         };
+                        s3.listObjects(params, function(err, data) {
+                            if (err) {
+                                console.log(err, err.stack); // an error occurred
+                            } else {     
+                                console.log(data);           // successful response
+                            }
+                        });*/
+                        console.log('Successfully logged!');
                     }
-                }); */
+                });
             
             },
     
@@ -139,7 +157,7 @@ export class AwscogusermgrService {
                 alert(err);
             },
         }); // end response
-        console.log(this.cognitoUser.getSignInUserSession());
+        //console.log(this.cognitoUser.getSignInUserSession());
     }
     
     getCognitoUserDetails(): void {
@@ -235,5 +253,43 @@ export class AwscogusermgrService {
         console.log('clockDrift: ' + localStorage.getItem(clockDriftKey));
         
     }
+
+    s3Test() {
+        
+        AWS.config.region = environment.region;
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: environment.identityPoolId,
+            //Logins : {
+            Logins: {}
+                // Change the key below according to the specific region your user pool is in.
+                //: result.getIdToken().getJwtToken()
+               //'cognito-idp.us-west-2.amazonaws.com/us-west-2_3O2OnecGV' : result.getIdToken().getJwtToken()
+               //'cognito-idp.' + environment.region + '.amazonaws.com/' + environment.userPoolId : result.getIdToken().getJwtToken()
+            //}
+        });
+        let my_key = 'cognito-idp.' + environment.region + '.amazonaws.com/' + environment.userPoolId;
+        AWS.config.credentials.params.Logins[my_key] = localStorage.getItem('sts_token')
+        //console.log("Localstorage getitem-jwt: " + localStorage.getItem('token'));
+        
+        AWS.config.credentials.refresh((error) => {
+            if (error) {
+                console.error(error);
+            } else {
+                var s3 = new AWS.S3();
+                 
+                var params = {
+                  Bucket: "test-app.optimisticbearings.majway.com", 
+                  MaxKeys: 50
+                };
+                s3.listObjects(params, function(err, data) {
+                    if (err) {
+                        console.log(err, err.stack); // an error occurred
+                    } else {     
+                        console.log(data);           // successful response
+                    }
+                });
+            } // End if/else
+        }); // End refresh
+    } //End S3 Test
 
 }

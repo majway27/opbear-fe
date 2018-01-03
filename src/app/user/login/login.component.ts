@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(username,password) {
-    event.preventDefault();
+    //event.preventDefault(); //Firefox issue
     console.log("Requesting Login");
     this.awscogusermgrService.startCognitoSession(username, password);
     console.log("Call Returned");

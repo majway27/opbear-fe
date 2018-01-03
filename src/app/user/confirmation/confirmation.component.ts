@@ -21,7 +21,7 @@ export class ConfirmationComponent implements OnInit {
   confirmationCode = new FormControl('', [Validators.required, Validators.maxLength(6)]);
   
   submitCodeValue() {
-    event.preventDefault();
+    //event.preventDefault();
     //this.confirmationCode.setValue('675015');
     console.log("Submitted code: " + this.confirmationCode.value)
     console.log('Validation Status: ' + this.confirmationCode.status);

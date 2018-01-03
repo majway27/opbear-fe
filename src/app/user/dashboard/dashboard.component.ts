@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Jwtauthsvchelper } from '../jwtauthsvchelper/jwtauthsvchelper.service';
+//import { AwscogusermgrService } from '../awscogusermgr/awscogusermgr.service';
 
 @Component({
   selector: 'my-dashboard',
@@ -30,4 +31,5 @@ export class DashboardComponent {
       return false
     }
   }
+  
 }

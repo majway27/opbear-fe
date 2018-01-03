@@ -41,5 +41,9 @@ export class ProfileComponent implements OnInit {
       // unsubscribe to ensure no memory leaks
       this.subscription.unsubscribe();
   }
+  
+  s3Test() {
+    this.awscogusermgrService.s3Test();
+  }
 
 }
