@@ -1,17 +1,19 @@
 <div class="row">
-    <h3>User Management</h3>
+    <h3>My Account</h3>
 </div>
 
-<div class="row align-items-start">
-    <div class="col-2"></div>
-    <div class="col-8">
-        <div *ngIf="username">
-            <h4 class="page-header">Username Test</h4>
-            <p>Username: {{username}}</p>
-        </div>
+<div class="row">
+  <div class="well">
+    <div class="col-sm">
+      <h4>Email: {{username}}</h4>
     </div>
-    <div class="col-2"></div>
+    <div class="col-sm">
+        <button class="btn btn-warning" (click)="myLogout()">Logout</button>
+        <button class="btn btn-primary" (click)="s3Test()">S3Test</button>
+    </div>
+  </div>
 </div>
+
 
 <div class="row align-items-center">
 
@@ -49,7 +51,7 @@
       <h4>Test - Ignore</h4>
     </div>
     <div class="col-sm">
-      <button class="btn btn-primary" (click)="s3Test()">S3Test</button>
+
     </div>
   </div>
 </div>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { AwscogusermgrService } from '../awscogusermgr/awscogusermgr.service';
+
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',
@@ -8,13 +10,13 @@ import { Router } from '@angular/router';
 })
 export class LogoutComponent implements OnInit {
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private awscogusermgrService: AwscogusermgrService) {
   }
 
   ngOnInit() {
-    console.log("Logging Out");
-    localStorage.removeItem('token');
-    localStorage.removeItem('current_user');
+    this.awscogusermgrService.logoutUser();
     this.router.navigate(['login']);
   }
 

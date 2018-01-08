@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
 
 import { AwscogusermgrService } from '../awscogusermgr/awscogusermgr.service';
+import { Jwtauthsvchelper } from '../jwtauthsvchelper/jwtauthsvchelper.service';
 import { Userprop } from '../userprop/userprop';
 
 @Component({
@@ -20,13 +21,19 @@ export class ProfileComponent implements OnInit {
   errorMessage: String;
   subscription: Subscription;
 
-  constructor(public router: Router, private awscogusermgrService: AwscogusermgrService) { 
+  constructor(
+    public router: Router, 
+    private awscogusermgrService: AwscogusermgrService,
+    private jwtauthsvchelper: Jwtauthsvchelper) { 
     this.username=""; 
     this.subscription = this.awscogusermgrService.retOb()
       .subscribe(userprops => { this.userprops = userprops; });
   }
 
   ngOnInit() {
+    
+    this.username = this.jwtauthsvchelper.getUser();
+    
     console.log("Requesting Attributes")
     if (this.awscogusermgrService.checkSession()) {
       this.awscogusermgrService.getCognitoUserDetails();
@@ -45,5 +52,10 @@ export class ProfileComponent implements OnInit {
   s3Test() {
     this.awscogusermgrService.s3Test();
   }
-
+  
+  myLogout() {
+    this.awscogusermgrService.logoutUser();
+    this.router.navigate(['login']);
+  }
+  
 }

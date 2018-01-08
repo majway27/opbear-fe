@@ -25,7 +25,7 @@ export class Jwtauthsvchelper implements CanActivate {
     if (localStorage.getItem('username')) {
       return localStorage.getItem('username')
     } else {
-      return false
+      return ""
     }
   }
 

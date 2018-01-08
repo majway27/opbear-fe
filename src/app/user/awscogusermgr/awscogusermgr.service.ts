@@ -292,4 +292,13 @@ export class AwscogusermgrService {
         }); // End refresh
     } //End S3 Test
 
+    logoutUser() {
+        if (this.cognitoUser != null) {
+            this.cognitoUser.signOut();
+            console.log("Logging Out");
+            localStorage.removeItem('token');
+            localStorage.removeItem('sts_token');
+            localStorage.removeItem('current_user');
+        }
+    }
 }

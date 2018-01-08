@@ -11,9 +11,11 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             
             <ul class="nav navbar-nav" *ngIf="loggedIn()">
-                <li><a routerLink="/" routerLinkActive="active">Inventory</a></li>
-                <li><a routerLink="/" routerLinkActive="active">Maintenance</a></li>
-                <li><a routerLink="/" routerLinkActive="active">Live Mode</a></li>
+                <li><a routerLink="/" routerLinkActive="active"><i class="fa fa-briefcase" aria-hidden="true"></i> Setup</a></li>
+                <li><a routerLink="/" routerLinkActive="active"><i class="fa fa-road" aria-hidden="true"></i> Travel</a></li>
+                <li><a routerLink="/" routerLinkActive="active"><i class="fa fa-wrench" aria-hidden="true"></i> Upkeep</a></li>
+                <li><a routerLink="/" routerLinkActive="active"><i class="fa fa-sitemap" aria-hidden="true"></i> SmartCards</a></li>
+                <li><a routerLink="/" routerLinkActive="active"><i class="fa fa-credit-card" aria-hidden="true"></i> Shop</a></li>
             </ul>
             
             <ul class="nav navbar-nav navbar-right">
@@ -21,7 +23,9 @@
                 <li *ngIf="loggedIn()">
                     <a routerLink="/profile" routerLinkActive="active">
                         <span class="glyphicon glyphicon-cog"></span> 
-                        Profile
+                        <span class="text-warning">
+                            Settings
+                        </span>
                     </a>
                 </li>
                 <li *ngIf="!loggedIn()">
@@ -36,12 +40,12 @@
                         Login
                     </a>
                 </li>
-                <li *ngIf="loggedIn()">
+                <!-- <li *ngIf="loggedIn()">
                     <a routerLink="/logout" routerLinkActive="active">
                         <span class="glyphicon glyphicon-log-out"></span> 
                         Logout
                     </a>
-                </li>
+                </li> -->
             </ul>
             
         </div>
