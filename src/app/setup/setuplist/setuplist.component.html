@@ -1,0 +1,21 @@
+<mat-card *ngFor="let list of lists" class="setup-card mat-elevation-z10">
+
+    <mat-card-header>
+        <img mat-card-avatar src="assets/rv8.png">
+        <mat-card-title>{{list.description}}</mat-card-title>
+        <mat-card-subtitle>List of Items</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <p>{{list.longDescription}}</p>
+    </mat-card-content>
+
+    <mat-card-actions class="list-actions">
+
+        <button mat-button class="mat-raised-button mat-primary">
+            Do Thing
+        </button>
+
+    </mat-card-actions>
+
+</mat-card>

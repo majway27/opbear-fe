@@ -1,14 +1,75 @@
-<navbar></navbar>
-
-<div class="container">
-    <div class="row">
-        <div class="deco-band">
-            <router-outlet class="spacer"></router-outlet>
+<mat-sidenav-container fullscreen>
+    
+        <mat-sidenav #start>
+        
+        <div>
+            <img class="navimage" src="assets/rv8.png" alt="logoimage">
         </div>
-    </div>
-    <div class="row">
-        <div class="bgimage"></div>
-    </div>
-</div>
-
-<footer>test</footer>
+        
+        <mat-nav-list>
+            
+            <div *ngIf="loggedIn()">
+                <a mat-list-item routerLink="/">
+                    <mat-icon color="primary">home</mat-icon>
+                    <span class="menu-leader">Home</span>
+                </a>
+                
+                <a mat-list-item routerLink="/setup">
+                    <mat-icon color="primary">work</mat-icon>
+                    <span class="menu-leader">Setup</span>
+                </a>
+                    
+                <a mat-list-item routerLink="/">
+                    <mat-icon color="primary">local_shipping</mat-icon>
+                    <span class="menu-leader">Travel</span>
+                </a>
+                            
+                <a mat-list-item routerLink="/">
+                    <mat-icon color="primary">build</mat-icon>
+                    <span class="menu-leader">Upkeep</span>
+                </a>
+                            
+                <a mat-list-item routerLink="/">
+                    <mat-icon color="primary">stars</mat-icon>
+                    <span class="menu-leader">SmartCards</span>
+                </a>
+                            
+                <a mat-list-item routerLink="/">
+                    <mat-icon color="primary">credit_card</mat-icon>
+                    <span class="menu-leader">Shop</span>
+                </a>
+                
+                <a mat-list-item routerLink="/profile">
+                    <mat-icon color="primary">settings</mat-icon>
+                    <span class="menu-leader">Settings</span>
+                </a>
+            </div>
+    
+            <div *ngIf="!loggedIn()">
+                <a mat-list-item routerLink="/login">
+                    <mat-icon color="primary">input</mat-icon>
+                    <span class="menu-leader">Login</span>
+                </a>
+                
+                <a mat-list-item routerLink="/signup">
+                    <mat-icon color="primary">person_add</mat-icon>
+                    <span class="menu-leader">Signup</span>
+                </a>
+            </div>
+        
+        </mat-nav-list>
+        
+    </mat-sidenav>
+    
+    <mat-toolbar color="primary">
+        <button mat-icon-button (click)="start.open()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        
+        <span>{{title}}</span>
+        
+    </mat-toolbar>
+    
+    <router-outlet></router-outlet>
+    
+</mat-sidenav-container>

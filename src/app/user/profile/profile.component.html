@@ -15,29 +15,7 @@
 </div>
 
 
-<div class="row align-items-center">
 
-    <div class="col-8">
-        <div class="wheel-loader" *ngIf="!userprops"></div>
-        
-        <div *ngIf="userprops">
-            <h4>My Profile</h4>
-            <div class="table-responsive">
-                <table class="table table-hover table-striped">
-                    <tr>
-                        <th>Name</th>
-                        <th>Value</th>
-                    </tr>
-                    <tr *ngFor="let userprop of userprops" class="active">
-                        <td>{{ userprop.name }}</td>
-                        <td>{{ userprop.value }}</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-
-</div>
 
 <div class="row align-items-end">
     <div class="col-2"></div>
@@ -48,10 +26,26 @@
 <div class="row">
   <div class="well">
     <div class="col-sm">
-      <h4>Test - Ignore</h4>
-    </div>
-    <div class="col-sm">
-
-    </div>
-  </div>
-</div>
+        <div class="row align-items-center">
+            <div class="col-8">
+                <div class="wheel-loader" *ngIf="!userprops"></div>
+                <div *ngIf="userprops">
+                        <h4>My Profile</h4>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Value</th>
+                                </tr>
+                                <tr *ngFor="let userprop of userprops" class="active">
+                                    <td>{{ userprop.name }}</td>
+                                    <td>{{ userprop.value }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div> <!-- col -->
+  </div> <!-- well -->
+</div> <!-- row -->

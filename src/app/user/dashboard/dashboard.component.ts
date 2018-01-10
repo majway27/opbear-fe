@@ -10,6 +10,8 @@ import { Jwtauthsvchelper } from '../jwtauthsvchelper/jwtauthsvchelper.service';
 })
 export class DashboardComponent { 
  
+  title = 'Optimistic Bearings - Home';
+ 
   constructor(private  jwtauthsvchelper:  Jwtauthsvchelper) { }
   
   ngOnInit(): void {

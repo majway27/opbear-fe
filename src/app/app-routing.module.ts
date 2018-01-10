@@ -8,6 +8,7 @@ import { DashboardComponent } from './user/dashboard/dashboard.component';
 import { LoginComponent } from './user/login/login.component';
 import { LogoutComponent } from './user/logout/logout.component';
 import { ProfileComponent } from './user/profile/profile.component';
+import { SetupComponent } from './setup/setup.component';
 import { SignupComponent } from './user/signup/signup.component';
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'login',  component: LoginComponent },
   { path: 'logout',  component: LogoutComponent },
   { path: 'profile',  component: ProfileComponent, canActivate: [Jwtauthsvchelper] },
+  { path: 'setup',  component: SetupComponent },
   { path: 'signup',  component: SignupComponent },
   { path: 'unauthorized',  component: LoginComponent }
 ];
