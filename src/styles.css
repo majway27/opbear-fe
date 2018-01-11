@@ -1,5 +1,17 @@
-@import '../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
+/* Mat */
+.mat-grid-list {
+  background: lightblue;
+}
+.mat-sidenav-content {
+    /* 600 */
+    background-color: #a9a58b; 
+}
+.mat-toolbar.mat-primary {
+    /* 50 */
+    color: #f6f5f2;
+}
 
+/* App Custom */
 .navimage { 
     text-align: center;
     background-size: 25%;
@@ -7,17 +19,36 @@
     min-height: 100px;
     height: 100px;
 }
-
 .menu-leader {
     margin-left: 4px;
 }
-
-.mat-grid-list {
-  background: lightblue;
-
+.ob-card-apex {
+    /* 100 */
+    background-color: #e7e6df;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.ob-card-apex-icon {
+    vertical-align: sub;
+}
+.ob-card {
+    /* 50 */
+    background-color: #f6f5f2;
+    margin: 20px 10px;
+}
+.ob-list-item {
+    /* 50 */
+    background-color: #f6f5f2;
+    border-top: 1px dashed #ddd;
+}
+.ob-inline-menu-button {
+    /* overrules .mat-button */
+    min-width: 12px !important;
+    padding: 0 !important;
+    color: #b0ac93 !important;
+}
+.ob-inline-menu-contents {
+    /* 50 */
+    background-color: #f6f5f2;
 }
 
-.mat-sidenav-content {
-    /* 600 */
-    background-color: #a9a58b; 
-}

@@ -1,21 +1,38 @@
-<div setup-panel>
+<mat-card class="ob-card-apex md-elevation-z6">
   
-  <h3>Setup</h3>
+  <mat-card-title>
+    Setup
+    <mat-icon color="primary" class="ob-card-apex-icon">work</mat-icon>
+  </mat-card-title>
   
-  <mat-tab-group>
+  <mat-card-content>
     
-    <mat-tab label="Lists">
-      <setuplist [lists]="setupLists">
-        
-      </setuplist>
-    </mat-tab>
-    
-    <mat-tab label="List Items">
-      <setuplistitem [listitems]="setupListItems">
-        
-      </setuplistitem>
-    </mat-tab>
-    
-  </mat-tab-group>
-  
-</div>
+    <mat-tab-group>
+      <mat-tab label="Active">
+        <mat-list>
+          <h3 mat-subheader>All lists that aren't locked templates or archived.</h3>
+          <setuplist [lists]="setupListsActive">
+          </setuplist>
+        </mat-list>
+      </mat-tab>
+      
+      <mat-tab label="Templates">
+        <mat-list>
+          <h3 mat-subheader>Create copies of locked template lists for use.  Enables reuse of favorite lists.</h3>
+          <setuplist [lists]="setupListsLocked">
+          </setuplist>
+        </mat-list>
+      </mat-tab>
+      
+      <mat-tab label="Archived">
+        <mat-list>
+          <h3 mat-subheader>Save old lists here.  An archived list can be deleted.</h3>
+          <setuplist [lists]="setupListsArchived">
+          </setuplist>
+        </mat-list>
+      </mat-tab>
+      
+    </mat-tab-group>
+
+  </mat-card-content>
+</mat-card>

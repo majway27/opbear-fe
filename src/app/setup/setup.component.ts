@@ -11,7 +11,9 @@ import { Setuplistitem } from "./setuplistitem/setuplistitem";
 })
 export class SetupComponent implements OnInit {
 
-  setupLists: Setuplist[];
+  setupListsActive: Setuplist[];
+  setupListsLocked: Setuplist[];
+  setupListsArchived: Setuplist[];
   setupListItems: Setuplistitem[];
 
   constructor() { }
@@ -20,7 +22,9 @@ export class SetupComponent implements OnInit {
     const myLists = Object.values(LISTS);
     const myListItems = Object.values(LISTITEMS);
   
-    this.setupLists = Object.values(LISTS);
+    this.setupListsActive = myLists.filter(setupList => setupList.status==="active");
+    this.setupListsLocked = myLists.filter(setupList => setupList.status==="locked");
+    this.setupListsArchived = myLists.filter(setupList => setupList.status==="archived");
   
     this.setupListItems = [];
   }

@@ -1,22 +1,3 @@
-<div class="row">
-    <h3>My Account</h3>
-</div>
-
-<div class="row">
-  <div class="well">
-    <div class="col-sm">
-      <h4>Email: {{username}}</h4>
-    </div>
-    <div class="col-sm">
-        <button class="btn btn-warning" (click)="myLogout()">Logout</button>
-        <button class="btn btn-primary" (click)="s3Test()">S3Test</button>
-    </div>
-  </div>
-</div>
-
-
-
-
 <div class="row align-items-end">
     <div class="col-2"></div>
     <div class="col-8" *ngIf="errorMessage"> {{errorMessage}} </div>
@@ -28,24 +9,50 @@
     <div class="col-sm">
         <div class="row align-items-center">
             <div class="col-8">
-                <div class="wheel-loader" *ngIf="!userprops"></div>
-                <div *ngIf="userprops">
-                        <h4>My Profile</h4>
-                        <div class="table-responsive">
-                            <table class="table table-hover table-striped">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Value</th>
-                                </tr>
-                                <tr *ngFor="let userprop of userprops" class="active">
-                                    <td>{{ userprop.name }}</td>
-                                    <td>{{ userprop.value }}</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
+
             </div>
         </div>
     </div> <!-- col -->
   </div> <!-- well -->
 </div> <!-- row -->
+
+<mat-card class="ob-card-apex md-elevation-z6">
+  
+  <mat-card-title>
+    My Account
+    <mat-icon color="primary" class="ob-card-apex-icon">settings</mat-icon>
+  </mat-card-title>
+  
+  <mat-card-content>
+        
+        <mat-card class="ob-card md-elevation-z12">
+          <mat-card-header>
+            <img mat-card-avatar src="assets/rv8.png">
+            <mat-card-title>Email:</mat-card-title>
+            <mat-card-subtitle>{{username}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <button mat-raised-button (click)="myLogout()" color="warn">Logout</button>
+            <button mat-raised-button (click)="s3Test()" color="primary">S3Test</button>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-list>
+
+            <div *ngIf="!userprops">
+                <mat-list-item>
+                    <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
+                </mat-list-item>
+            </div>
+            <div *ngIf="userprops">
+                <mat-list-item *ngFor="let userprop of userprops" class="ob-list-item">
+                    <h3 mat-line>{{ userprop.name }}</h3>
+                    <p mat-line>
+                        <span>{{ userprop.value }}</span>
+                    </p>
+                </mat-list-item>
+            </div>
+        </mat-list>
+
+  </mat-card-content>
+</mat-card>

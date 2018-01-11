@@ -19,8 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css",
-	      "styles-theme.scss"
+        "styles-theme.scss",
+        "styles.css"
       ],
       "scripts": [
         "assets/aws-cognito-sdk.min.js",
