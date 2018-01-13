@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Setuplistitem } from "./setuplistitem";
+import { LISTITEMS } from "./templistitemdata";
+
 
 @Component({
   selector: 'setuplistitem',
@@ -8,12 +10,16 @@ import { Setuplistitem } from "./setuplistitem";
 })
 export class SetuplistitemComponent implements OnInit {
 
-  @Input()
-  listitems: Setuplistitem[];
+  
+  setupListItems: Setuplistitem[];
 
   constructor() { }
 
   ngOnInit() {
+    //const myListItems = Object.values(LISTITEMS);
+    
+    //this.setupListItems = myLists.filter(setupList => setupList.status==="active");
+    this.setupListItems = Object.values(LISTITEMS);
   }
 
 }

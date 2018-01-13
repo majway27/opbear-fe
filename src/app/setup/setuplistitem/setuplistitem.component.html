@@ -1,15 +1,53 @@
-<mat-list>
-  <h3 mat-subheader>This Month</h3>
-  <mat-list-item *ngFor="let listitem of listitems">
-    <mat-icon mat-list-icon color="primary">note</mat-icon>
-    <h4 mat-line>{{listitem.description}}</h4>
-    <p mat-line> {{listitem.longDescription}} </p>
-  </mat-list-item>
-  <mat-divider></mat-divider>
-  <h3 mat-subheader>Older</h3>
-  <mat-list-item *ngFor="let listitem of listitems">
-    <mat-icon mat-list-icon color="primary">note</mat-icon>
-    <h4 mat-line>{{listitem.description}}</h4>
-    <p mat-line> {{listitem.longDescription}} </p>
-  </mat-list-item>
-</mat-list>
+<div class="ob-fab-add-group ob-fab-stacker">            
+    <button mat-mini-fab color="primary" aria-label="Add a item" class="ob-fab-roomy">
+        <mat-icon>add</mat-icon>
+    </button>
+        <button mat-mini-fab color="accent" aria-label="Go Back" class="ob-fab-roomy">
+        <mat-icon>replay</mat-icon>
+    </button>
+    <button mat-mini-fab color="accent" aria-label="Go Back" class="ob-fab-roomy">
+        <mat-icon>help_outline</mat-icon>
+    </button>
+</div>
+
+<mat-card class="ob-card-apex md-elevation-z6">
+  
+  <mat-card-title>
+    <div class="ob-menu-control">
+        <span>This is a Long List Name
+            <mat-icon color="primary" class="ob-card-apex-icon">work</mat-icon>
+        </span>
+        <mat-form-field >
+            <input matInput placeholder="Filter">
+        </mat-form-field>
+    </div>
+  </mat-card-title>
+  
+  <mat-card-content>
+
+    <mat-list>
+        <mat-list-item *ngFor="let listitem of setupListItems" class="ob-list-item">
+            <div class="ob-arrange-justify">
+                <span>
+                    <mat-checkbox color="primary">
+                        <h4 mat-line class="ob-list-header">{{listitem.description}}</h4>
+                        <p mat-line class="ob-list-text"> {{listitem.longDescription}} </p>
+                    </mat-checkbox>
+                </span>
+                <span>
+                    <button mat-button [mat-menu-trigger-for]="listMenu" class="ob-inline-menu-button">
+                        <mat-icon>settings</mat-icon>
+                    </button>
+                    
+                    <mat-menu #listMenu="matMenu" class="ob-inline-menu-contents">
+                            <button mat-menu-item>Copy</button>
+                            <button mat-menu-item>Delete</button>
+                    </mat-menu>
+                </span>
+            </div>
+        </mat-list-item>
+    </mat-list>
+    
+  </mat-card-content>
+</mat-card>
+
