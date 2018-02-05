@@ -12,11 +12,12 @@ import { AwscogusermgrService } from '../awscogusermgr/awscogusermgr.service';
 })
 export class SignupComponent implements OnInit {
 
-  constructor(public router: Router, private awscogusermgrService: AwscogusermgrService) {
+  constructor(
+    public router: Router, 
+    private awscogusermgrService: AwscogusermgrService) {
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
   
   usernamefc = new FormControl('', [Validators.required, Validators.minLength(3)]);
   passwordfc = new FormControl('', [Validators.required, Validators.minLength(6)]);
@@ -40,7 +41,7 @@ export class SignupComponent implements OnInit {
       this.passwordfc.value
     );
     console.log("Call Returned");
-    //console.log("un:" + sessionStorage.username + " pwd: " + sessionStorage.password);
+    console.log("un:" + sessionStorage.username + " pwd: " + sessionStorage.password);
     this.router.navigate(['confirmation']);
   }
   

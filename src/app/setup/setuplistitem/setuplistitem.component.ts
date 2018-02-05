@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+
 import { Setuplistitem } from "./setuplistitem";
 import { LISTITEMS } from "./templistitemdata";
 
@@ -13,13 +16,27 @@ export class SetuplistitemComponent implements OnInit {
   
   setupListItems: Setuplistitem[];
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location
+    ) { }
 
   ngOnInit() {
     //const myListItems = Object.values(LISTITEMS);
     
     //this.setupListItems = myLists.filter(setupList => setupList.status==="active");
     this.setupListItems = Object.values(LISTITEMS);
+    this.getListItems();
+  }
+  
+  getListItems(): void {
+    const id = +this.route.snapshot.paramMap.get('id');
+    //this.heroService.getHero(id)
+      //.subscribe(hero => this.hero = hero);
+  }
+  
+  goBack(): void {
+    this.location.back();
   }
 
 }

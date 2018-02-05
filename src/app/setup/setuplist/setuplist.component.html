@@ -1,27 +1,37 @@
-<mat-list-item *ngFor="let list of lists" routerLink="/setup/{{list.id}}" class="ob-list-item">
-    <mat-icon mat-list-icon color="primary">folder</mat-icon>
-    <h4 mat-line>{{list.description}}</h4>
-    <p mat-line> {{list.longDescription}} </p>
-    <button mat-button [mat-menu-trigger-for]="listMenu" class="ob-inline-menu-button">
-        <mat-icon>settings</mat-icon>
-    </button>
-    <mat-menu #listMenu="matMenu" class="ob-inline-menu-contents">
-
-        <div *ngIf="list.status==='active'">
-            <button mat-menu-item>Lock</button>
-            <button mat-menu-item>Archive</button>
-        </div>
+<mat-list-item *ngFor="let list of lists" class="ob-list-item">
+    
+    <div class="ob-arrange-justify">
+        <span class="ob-list-control" routerLink="/setup/{{list.id}}">
+            <span>
+                <mat-icon mat-list-icon color="primary">folder</mat-icon>
+            </span>
+            <span>
+                <h4 mat-line class="ob-list-header">{{list.description}}</h4>
+                <p mat-line class="ob-list-text"> {{list.longDescription}} </p>
+            </span>
+        </span>
         
-        <div *ngIf="list.status==='locked'">
-            <button mat-menu-item>Copy to "Active"</button>
-            <button mat-menu-item>Un-Lock</button>
-            <button mat-menu-item>Archive</button>
-        </div>
-        
-        <div *ngIf="list.status==='archived'">
-            <button mat-menu-item>Un-Archive</button>
-            <button mat-menu-item>Delete</button>
-        </div>
-        
-    </mat-menu>
+        <span>
+            <button mat-button [mat-menu-trigger-for]="listMenu" class="ob-inline-menu-button">
+                <mat-icon>settings</mat-icon>
+            </button>
+            <mat-menu #listMenu="matMenu" class="ob-inline-menu-contents">
+                <div *ngIf="list.status==='active'">
+                    <button mat-menu-item>Lock</button>
+                    <button mat-menu-item>Archive</button>
+                </div>
+                
+                <div *ngIf="list.status==='locked'">
+                    <button mat-menu-item>Copy to "Active"</button>
+                    <button mat-menu-item>Un-Lock</button>
+                    <button mat-menu-item>Archive</button>
+                </div>
+                
+                <div *ngIf="list.status==='archived'">
+                    <button mat-menu-item>Un-Archive</button>
+                    <button mat-menu-item>Delete</button>
+                </div>
+            </mat-menu>
+        </span>
+    </div>
 </mat-list-item>

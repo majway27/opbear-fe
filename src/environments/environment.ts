@@ -7,8 +7,7 @@ export const environment = {
   production: false,
   
   region: 'us-west-2',
-  identityPoolId: 'us-west-2:a0af11bf-8372-4f97-bae3-0eb192f4da67',
-  userPoolId: 'us-west-2_3O2OnecGV',
-  clientId: '5kush4n96v69b64phcgeu31j2g'
-  
+  identityPoolId: 'us-west-2:c9217d88-53af-40b9-8929-5dbb1fd56101',
+  userPoolId: 'us-west-2_7NfOvjjW8',
+  clientId: '5on8qvnsukema47e3e51bqkqa1'
 };

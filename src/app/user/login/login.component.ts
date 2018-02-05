@@ -3,6 +3,7 @@ import { Component, Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AwscogusermgrService } from '../awscogusermgr/awscogusermgr.service';
+import { Jwtauthsvchelper } from '../jwtauthsvchelper/jwtauthsvchelper.service';
 
 @Component({
   selector: 'app-login',
@@ -13,17 +14,27 @@ import { AwscogusermgrService } from '../awscogusermgr/awscogusermgr.service';
 @Injectable()
 export class LoginComponent implements OnInit {
 
-  constructor(public router: Router, private awscogusermgrService: AwscogusermgrService) {
+  constructor(
+    public router: Router, 
+    private awscogusermgrService: AwscogusermgrService,
+    private  jwtauthsvchelper:  Jwtauthsvchelper) {
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   login(username,password) {
     //event.preventDefault(); //Firefox issue
     console.log("Requesting Login");
-    this.awscogusermgrService.startCognitoSession(username, password);
-    console.log("Call Returned");
-    this.router.navigate(['dashboard']);
+    this.awscogusermgrService.firstLogin(
+      username, 
+      password, 
+      this
+    );
+    //console.log("Call Returned");
   }
+  
+  goHome() {
+    this.jwtauthsvchelper.goHome()
+  }
+  
 }

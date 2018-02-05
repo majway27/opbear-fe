@@ -28,5 +28,9 @@ export class Jwtauthsvchelper implements CanActivate {
       return ""
     }
   }
+  
+  goHome() {
+    this.router.navigate(['dashboard']);
+  }
 
 }

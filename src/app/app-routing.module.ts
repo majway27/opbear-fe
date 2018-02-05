@@ -14,13 +14,13 @@ import { SignupComponent } from './user/signup/signup.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard',  component: DashboardComponent },
+  { path: 'dashboard',  component: DashboardComponent, canActivate: [Jwtauthsvchelper]  },
   { path: 'confirmation',  component: ConfirmationComponent },
   { path: 'login',  component: LoginComponent },
   { path: 'logout',  component: LogoutComponent },
   { path: 'profile',  component: ProfileComponent, canActivate: [Jwtauthsvchelper] },
-  { path: 'setup',  component: SetupComponent },
-  { path: 'setup/:id',  component: SetuplistitemComponent },
+  { path: 'setup',  component: SetupComponent, canActivate: [Jwtauthsvchelper]  },
+  { path: 'setup/:id',  component: SetuplistitemComponent, canActivate: [Jwtauthsvchelper]  },
   { path: 'signup',  component: SignupComponent },
   { path: 'unauthorized',  component: LoginComponent }
 ];

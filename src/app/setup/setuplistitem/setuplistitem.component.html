@@ -2,23 +2,23 @@
     <button mat-mini-fab color="primary" aria-label="Add a item" class="ob-fab-roomy">
         <mat-icon>add</mat-icon>
     </button>
-        <button mat-mini-fab color="accent" aria-label="Go Back" class="ob-fab-roomy">
+        <button mat-mini-fab (click)="goBack()" color="accent" aria-label="Go Back" class="ob-fab-roomy">
         <mat-icon>replay</mat-icon>
     </button>
-    <button mat-mini-fab color="accent" aria-label="Go Back" class="ob-fab-roomy">
+    <button mat-mini-fab color="accent" aria-label="Help" class="ob-fab-roomy">
         <mat-icon>help_outline</mat-icon>
     </button>
 </div>
 
 <mat-card class="ob-card-apex md-elevation-z6">
   
-  <mat-card-title>
+  <mat-card-title class="thinner">
     <div class="ob-menu-control">
         <span>This is a Long List Name
             <mat-icon color="primary" class="ob-card-apex-icon">work</mat-icon>
         </span>
         <mat-form-field >
-            <input matInput placeholder="Filter">
+            <input matInput placeholder="Filter" type="search" class="ob-form-input">
         </mat-form-field>
     </div>
   </mat-card-title>

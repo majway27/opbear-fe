@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 
 import { AwscogusermgrService } from '../awscogusermgr/awscogusermgr.service';
+import { Jwtauthsvchelper } from '../jwtauthsvchelper/jwtauthsvchelper.service';
 
 @Component({
   selector: 'app-confirmation',
@@ -12,11 +13,13 @@ import { AwscogusermgrService } from '../awscogusermgr/awscogusermgr.service';
 })
 export class ConfirmationComponent implements OnInit {
 
-  constructor(public router: Router, private awscogusermgrService: AwscogusermgrService) {
+  constructor(
+    public router: Router, 
+    private awscogusermgrService: AwscogusermgrService,
+    private  jwtauthsvchelper:  Jwtauthsvchelper) {
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
   
   confirmationCode = new FormControl('', [Validators.required, Validators.maxLength(6)]);
   
@@ -27,12 +30,16 @@ export class ConfirmationComponent implements OnInit {
     console.log('Validation Status: ' + this.confirmationCode.status);
     console.log("Requesting Confirmation");
     this.awscogusermgrService.confirmCognitoUser(this.confirmationCode.value);
-    console.log("Call Returned");
-    this.awscogusermgrService.startCognitoSession(
+    //console.log("Call Returned");
+    this.awscogusermgrService.firstLogin(
       sessionStorage.username,
-      sessionStorage.password
+      sessionStorage.password,
+      this
     );
-    this.router.navigate(['dashboard']);
+  }
+  
+  goHome() {
+    this.jwtauthsvchelper.goHome()
   }
   
   resetCode() {

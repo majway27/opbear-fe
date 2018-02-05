@@ -1,8 +1,23 @@
+<div class="ob-fab-add-group ob-fab-stacker">            
+    <button mat-mini-fab color="primary" aria-label="Add a item" class="ob-fab-roomy">
+        <mat-icon>add</mat-icon>
+    </button>
+    <button mat-mini-fab color="accent" aria-label="Help" class="ob-fab-roomy">
+        <mat-icon>help_outline</mat-icon>
+    </button>
+</div>
+
 <mat-card class="ob-card-apex md-elevation-z6">
   
-  <mat-card-title>
-    Setup
-    <mat-icon color="primary" class="ob-card-apex-icon">work</mat-icon>
+  <mat-card-title class="thinner">
+    <div class="ob-menu-control">
+        <span>Setup
+            <mat-icon color="primary" class="ob-card-apex-icon">work</mat-icon>
+        </span>
+        <mat-form-field >
+            <input matInput placeholder="Filter" type="search" class="ob-form-input">
+        </mat-form-field>
+    </div>
   </mat-card-title>
   
   <mat-card-content>

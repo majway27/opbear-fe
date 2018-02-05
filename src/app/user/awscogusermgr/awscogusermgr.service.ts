@@ -80,14 +80,15 @@ export class AwscogusermgrService {
     
     confirmCognitoUser(confirmationcode) {
 
-        /*var userData = {
+        var userData = {
             Username : localStorage.getItem('username'),  // Should be set from addCognitoUser
             Pool : this.userPool
-        };*/
+        };
         console.log("code: " + confirmationcode)
+        console.log("cogUser-username: " + this.cognitoUser.username)
         
-        //var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-        this.cognitoUser.confirmRegistration(confirmationcode, true, function(err, result) {
+        var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+        cognitoUser.confirmRegistration(confirmationcode, true, function(err, result) {
             if (err) {
                 alert(err);
                 return;
@@ -300,5 +301,69 @@ export class AwscogusermgrService {
             localStorage.removeItem('sts_token');
             localStorage.removeItem('current_user');
         }
+    }
+    
+    firstLogin(username:string,password:string, callback:any) {
+        localStorage.setItem('username', username);
+        localStorage.setItem('password', password);
+        this.cognitoUser.username = localStorage.getItem('username');
+        this.setPersistentSession();
+        
+        let myUserPool = this.userPool;  //cognitoUser.authenticateUser() callback support
+        this.cognitoUser.authenticateUser(this.getAuthenticationDetails(), {
+            onSuccess: function (result) {
+                
+                localStorage.setItem('token', result.getAccessToken().getJwtToken());
+                localStorage.setItem('username', myUserPool.getCurrentUser().getUsername());
+                localStorage.setItem('sts_token', result.getIdToken().getJwtToken())
+                //console.log("Localstorage currentuser: " + localStorage.getItem('username'));
+
+                AWS.config.region = environment.region;
+                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                    IdentityPoolId: environment.identityPoolId,
+                    //Logins : {
+                    Logins: {}
+                        // Change the key below according to the specific region your user pool is in.
+                        //: result.getIdToken().getJwtToken()
+                       //'cognito-idp.us-west-2.amazonaws.com/us-west-2_3O2OnecGV' : result.getIdToken().getJwtToken()
+                       //'cognito-idp.' + environment.region + '.amazonaws.com/' + environment.userPoolId : result.getIdToken().getJwtToken()
+                    //}
+                });
+                let my_key = 'cognito-idp.' + environment.region + '.amazonaws.com/' + environment.userPoolId;
+                AWS.config.credentials.params.Logins[my_key] = result.getIdToken().getJwtToken()
+                //console.log(AWSCognito.config.credentials.params)
+                //console.log("Localstorage getitem-jwt: " + localStorage.getItem('sts_token'))
+                
+                //refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
+                AWS.config.credentials.refresh((error) => {
+                    if (error) {
+                         console.error(error);
+                    } else {
+                        // Instantiate aws sdk service objects now that the credentials have been updated.
+                        /*var s3 = new AWS.S3();
+                         
+                        var params = {
+                          Bucket: "test-app.optimisticbearings.majway.com", 
+                          MaxKeys: 50
+                         };
+                        s3.listObjects(params, function(err, data) {
+                            if (err) {
+                                console.log(err, err.stack); // an error occurred
+                            } else {     
+                                console.log(data);           // successful response
+                            }
+                        });*/
+                        console.log('Successfully logged!');
+                    }
+                });
+                callback.goHome();
+            
+            },
+    
+            onFailure: function(err) {
+                alert(err);
+            },
+        }); // end response
+        //console.log(this.cognitoUser.getSignInUserSession());
     }
 }

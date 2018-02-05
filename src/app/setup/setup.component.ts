@@ -18,7 +18,6 @@ export class SetupComponent implements OnInit {
 
   ngOnInit() {
     const myLists = Object.values(LISTS);
-    
   
     this.setupListsActive = myLists.filter(setupList => setupList.status==="active");
     this.setupListsLocked = myLists.filter(setupList => setupList.status==="locked");
