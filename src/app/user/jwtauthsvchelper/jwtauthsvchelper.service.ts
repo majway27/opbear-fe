@@ -3,10 +3,15 @@ import { Router } from '@angular/router';
 import { CanActivate } from '@angular/router';
 import { tokenNotExpired } from 'angular2-jwt';
 
+import { AwscogusermgrService } from '../awscogusermgr/awscogusermgr.service';
+
 @Injectable()
 export class Jwtauthsvchelper implements CanActivate {
 
-  constructor( private router: Router ) {}
+  constructor(
+    private router: Router,
+    private awscogusermgrService: AwscogusermgrService
+    ) {}
 
   canActivate() {
     if(this.loggedIn()) {
@@ -21,12 +26,15 @@ export class Jwtauthsvchelper implements CanActivate {
     return tokenNotExpired();
   }
   
-  getUser() {
-    if (localStorage.getItem('username')) {
+  getUserName() {
+    /*if (localStorage.getItem('username')) {
       return localStorage.getItem('username')
     } else {
       return ""
-    }
+    }*/
+    let cognitoUser = this.awscogusermgrService.getUser();
+    return cognitoUser.username
+    
   }
   
   goHome() {

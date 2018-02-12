@@ -1,0 +1,18 @@
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="mydataSource">
+
+    <!-- listid Column -->
+    <ng-container matColumnDef="listid">
+      <mat-header-cell *matHeaderCellDef> ListID </mat-header-cell>
+      <mat-cell *matCellDef="let myitem"> {{myitem.listid}} </mat-cell>
+    </ng-container>
+    <!-- name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Desc </mat-header-cell>
+      <mat-cell *matCellDef="let myitem"> {{myitem.name}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="mydisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: mydisplayedColumns;"></mat-row>
+  </mat-table>
+</div>

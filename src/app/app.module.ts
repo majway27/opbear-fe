@@ -21,16 +21,18 @@ import { AppComponent } from './app.component';
 
 import { AwscogusermgrService } from './user/awscogusermgr/awscogusermgr.service';
 import { Jwtauthsvchelper } from './user/jwtauthsvchelper/jwtauthsvchelper.service';
+import { ListService } from './setup/services/list.service';
 
 import { ConfirmationComponent } from './user/confirmation/confirmation.component';
 import { DashboardComponent } from './user/dashboard/dashboard.component';
 import { LoginComponent } from './user/login/login.component';
 import { LogoutComponent } from './user/logout/logout.component';
-import { NavbarComponent } from './user/navbar/navbar.component';
+//import { NavbarComponent } from './user/navbar/navbar.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { SetupComponent } from './setup/setup.component';
 import { SetuplistComponent } from './setup/setuplist/setuplist.component';
 import { SetuplistitemComponent } from './setup/setuplistitem/setuplistitem.component';
+import { SetuptableComponent } from './setup/setuptable/setuptable.component';
 import { SignupComponent } from './user/signup/signup.component';
 
 
@@ -41,12 +43,13 @@ import { SignupComponent } from './user/signup/signup.component';
     LoginComponent,
     ProfileComponent,
     LogoutComponent,
-    NavbarComponent,
+    //NavbarComponent,
     SignupComponent,
     ConfirmationComponent,
     SetupComponent,
     SetuplistComponent,
-    SetuplistitemComponent
+    SetuplistitemComponent,
+    SetuptableComponent
   ],
   imports: [
     AppRoutingModule,
@@ -67,7 +70,7 @@ import { SignupComponent } from './user/signup/signup.component';
     MatToolbarModule,MatTooltipModule,
     ReactiveFormsModule
   ],
-  providers: [AwscogusermgrService,Jwtauthsvchelper],
+  providers: [AwscogusermgrService,Jwtauthsvchelper,ListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

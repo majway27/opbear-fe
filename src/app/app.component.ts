@@ -23,8 +23,8 @@ export class AppComponent {
   }
   
   getMyUser() {
-    if (this.jwtauthsvchelper.getUser()) {
-      return this.jwtauthsvchelper.getUser()
+    if (this.jwtauthsvchelper.getUserName()) {
+      return this.jwtauthsvchelper.getUserName()
     } else {
       return false
     }

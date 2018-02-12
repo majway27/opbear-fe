@@ -31,24 +31,15 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-    this.username = this.jwtauthsvchelper.getUser();
-    
-    console.log("Requesting Attributes")
-    if (this.awscogusermgrService.checkSession()) {
-      this.awscogusermgrService.getCognitoUserDetails();
-      console.log("Call Returned");
-    } else {
-      // Wait for login to come back
-      setTimeout(()=>{ this.awscogusermgrService.getCognitoUserDetails() }, 4000);
-    }
+    this.username = this.jwtauthsvchelper.getUserName();
+    this.awscogusermgrService.getCognitoUserDetails();
   }
 
   ngOnDestroy() {
       // unsubscribe to ensure no memory leaks
       this.subscription.unsubscribe();
   }
-  
+
   s3Test() {
     this.awscogusermgrService.s3Test();
   }

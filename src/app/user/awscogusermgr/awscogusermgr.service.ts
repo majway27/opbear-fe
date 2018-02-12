@@ -97,7 +97,7 @@ export class AwscogusermgrService {
         });
     }
 
-    startCognitoSession(username,password): void {
+    startCognitoSession(username: string, password:string): void {
         
         localStorage.setItem('username', username);
         localStorage.setItem('password', password);
@@ -151,9 +151,7 @@ export class AwscogusermgrService {
                         console.log('Successfully logged!');
                     }
                 });
-            
             },
-    
             onFailure: function(err) {
                 alert(err);
             },
@@ -162,12 +160,17 @@ export class AwscogusermgrService {
     }
     
     getCognitoUserDetails(): void {
+        
+        console.log("Requesting Attributes");
+        
+        let myCognitoUser = this.checkSession();
+        
         let selfob = this.observableResp;
         let selfsub = this.subject;
         
         selfob = []; //init if returning
         
-        this.cognitoUser.getUserAttributes(function(err, result) {
+        myCognitoUser.getUserAttributes(function(err, result) {
             if (err) {
                 alert(err);
                 return;
@@ -184,6 +187,20 @@ export class AwscogusermgrService {
         return this.subject.asObservable();   
     }
     
+    getUser() {
+        if (this.cognitoUser.username == "") {
+            console.log("cognitoUser was empty")
+            var cognitoUser = this.userPool.getCurrentUser();
+            console.log("Returning cognitoUser")
+            console.log(cognitoUser)
+            return cognitoUser
+        } else {
+            console.log("cognitoUser was set, returning")
+            console.log(this.cognitoUser)
+            return this.cognitoUser
+        }
+    }
+    
     getAuthenticationDetails() {
         let authenticationData = {
             Username : localStorage.getItem('username'),
@@ -194,17 +211,34 @@ export class AwscogusermgrService {
     }
     
     checkSession() {
-        if (!this.cognitoUser.getSignInUserSession()) {
-            console.log("Need to refresh session")
-            this.startCognitoSession(localStorage.getItem('username'),localStorage.getItem('password'));
-            return false;
-            //this.cacheMySession();
-            //this.cognitoUser.refreshSession( localStorage.getItem('optimisticbearings.refreshToken'), function(result) {});
-        } else {
-            console.log(this.cognitoUser.getSignInUserSession());
-            return true;
-        }
+        let myCognitoUser = this.getUser();
+        console.log("myCognitoUser.signInUserSession:")
+        console.log(myCognitoUser.signInUserSession)
         
+        // Do we need to login again due to full page refresh?
+        if (myCognitoUser.signInUserSession) {
+            myCognitoUser.getSession(function(err, session) {
+                if (err) {
+                    alert("Error getting session: " + err);
+                    return;
+                }
+                console.log('session validity: ' + session.isValid());
+            });
+            return myCognitoUser;
+        } else {
+            console.log("No signInUserSession, logging in.");
+            myCognitoUser.getSignInUserSession();
+            console.log("myCognitoUser.signInUserSession:");
+            console.log(myCognitoUser.signInUserSession);
+            myCognitoUser.getSession(function(err, session) {
+                if (err) {
+                    alert("Error getting session: " + err);
+                    return;
+                }
+                console.log('session validity: ' + session.isValid());
+            });
+            return myCognitoUser;
+        }
     }
     
     setPersistentSession() {

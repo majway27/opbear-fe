@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
   passwordfc = new FormControl('', [Validators.required, Validators.minLength(6)]);
   
   submitSignUpValues() {
-    event.preventDefault();
+    //event.preventDefault();
     //this.confirmationCode.setValue('675015');
     //console.log("Submitted code: " + this.confirmationCode.value)
     //console.log('Validation Status: ' + this.confirmationCode.status);

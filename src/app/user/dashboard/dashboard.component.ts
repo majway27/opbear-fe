@@ -12,11 +12,12 @@ export class DashboardComponent {
  
   title = 'Optimistic Bearings - Home';
  
+  myUser = this.jwtauthsvchelper.getUserName();
+ 
   constructor(private  jwtauthsvchelper:  Jwtauthsvchelper) { }
   
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
+  
   loggedIn() {
     if (this.jwtauthsvchelper.loggedIn()) {
       //console.log("Localstorage getitem-jwt: " + localStorage.getItem('token')); 
@@ -25,13 +26,5 @@ export class DashboardComponent {
       return false
     }
   }
-  
-  getMyUser() {
-    if (this.jwtauthsvchelper.getUser()) {
-      return this.jwtauthsvchelper.getUser()
-    } else {
-      return false
-    }
-  }
-  
+
 }
