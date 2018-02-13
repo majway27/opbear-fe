@@ -161,7 +161,7 @@ export class AwscogusermgrService {
     
     getCognitoUserDetails(): void {
         
-        console.log("Requesting Attributes");
+        //console.log("Requesting Attributes");
         
         let myCognitoUser = this.checkSession();
         
@@ -189,14 +189,14 @@ export class AwscogusermgrService {
     
     getUser() {
         if (this.cognitoUser.username == "") {
-            console.log("cognitoUser was empty")
+            //console.log("cognitoUser was empty")
             var cognitoUser = this.userPool.getCurrentUser();
-            console.log("Returning cognitoUser")
-            console.log(cognitoUser)
+            //console.log("Returning cognitoUser")
+            //console.log(cognitoUser)
             return cognitoUser
         } else {
-            console.log("cognitoUser was set, returning")
-            console.log(this.cognitoUser)
+            //console.log("cognitoUser was set, returning")
+            //console.log(this.cognitoUser)
             return this.cognitoUser
         }
     }
@@ -212,8 +212,8 @@ export class AwscogusermgrService {
     
     checkSession() {
         let myCognitoUser = this.getUser();
-        console.log("myCognitoUser.signInUserSession:")
-        console.log(myCognitoUser.signInUserSession)
+        //console.log("myCognitoUser.signInUserSession:")
+        //console.log(myCognitoUser.signInUserSession)
         
         // Do we need to login again due to full page refresh?
         if (myCognitoUser.signInUserSession) {
@@ -222,20 +222,20 @@ export class AwscogusermgrService {
                     alert("Error getting session: " + err);
                     return;
                 }
-                console.log('session validity: ' + session.isValid());
+                //console.log('session validity: ' + session.isValid());
             });
             return myCognitoUser;
         } else {
-            console.log("No signInUserSession, logging in.");
+            //console.log("No signInUserSession, logging in.");
             myCognitoUser.getSignInUserSession();
-            console.log("myCognitoUser.signInUserSession:");
-            console.log(myCognitoUser.signInUserSession);
+            //console.log("myCognitoUser.signInUserSession:");
+            //console.log(myCognitoUser.signInUserSession);
             myCognitoUser.getSession(function(err, session) {
                 if (err) {
                     alert("Error getting session: " + err);
                     return;
                 }
-                console.log('session validity: ' + session.isValid());
+                //console.log('session validity: ' + session.isValid());
             });
             return myCognitoUser;
         }

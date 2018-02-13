@@ -1,4 +1,5 @@
 export interface List {
+  uid: string;
   listid: number;
   name: string;
   longDescription: string;
@@ -6,3 +7,11 @@ export interface List {
   status: string;
   items: {};
 };
+
+/*export class List {
+  uid: string;
+  listid: string;
+  name: string;
+  constructor() { 
+  }
+};*/
