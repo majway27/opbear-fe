@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Setuplist } from "./setuplist/setuplist";
-import { LISTS } from "./setuplist/templistdata";
+import { Observable } from 'rxjs';
 
+import { List } from './model/list'
+import { ListService } from './services/list.service';
 
 @Component({
   selector: 'app-setup',
@@ -10,19 +11,26 @@ import { LISTS } from "./setuplist/templistdata";
 })
 export class SetupComponent implements OnInit {
 
-  setupListsActive: Setuplist[];
-  setupListsLocked: Setuplist[];
-  setupListsArchived: Setuplist[];
-
-  constructor() { }
-
-  ngOnInit() {
-    const myLists = Object.values(LISTS);
+  allLists: Observable<List[]>
   
-    this.setupListsActive = myLists.filter(setupList => setupList.status==="active");
-    this.setupListsLocked = myLists.filter(setupList => setupList.status==="locked");
-    this.setupListsArchived = myLists.filter(setupList => setupList.status==="archived");
+  activelists: List[];
+  lockedlists: List[];
+  archivedlists: List[];
   
-  }
+  errorMessage: String;
 
+  constructor(private listService: ListService) { }
+
+  ngOnInit(): void {
+    this.allLists = this.listService.getAllMyLists();
+    this.allLists.subscribe(
+      lists => this.activelists = lists.filter(function (el) {return el.status==="active"}),
+    );
+    this.allLists.subscribe(
+      lists => this.lockedlists = lists.filter(function (el) {return el.status==="locked"}),
+    );
+    this.allLists.subscribe(
+      lists => this.archivedlists = lists.filter(function (el) {return el.status==="archived"}),
+    );
+	}
 }

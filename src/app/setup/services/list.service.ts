@@ -21,14 +21,6 @@ export class ListService {
         private awscogusermgrService:AwscogusermgrService
         ) {}
     
-    getMyLists(): Observable<List[]> {
-        //console.log("GET WITH HEADERS");
-        return this.http.get(this.lists_url, this.setup_opts())
-            .pipe(
-                map(res => res['payload'])
-            );
-    }
-    
     getAllMyLists(): Observable<List[]> {
         return this.http.get(this.lists_url, this.setup_opts())
 	        .map(this.extractData)

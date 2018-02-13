@@ -1,12 +1,12 @@
 <mat-list-item *ngFor="let list of lists" class="ob-list-item">
     
     <div class="ob-arrange-justify">
-        <span class="ob-list-control" routerLink="/setup/{{list.id}}">
+        <span class="ob-list-control" routerLink="/setup/{{list.listid}}">
             <span>
                 <mat-icon mat-list-icon color="primary">folder</mat-icon>
             </span>
             <span>
-                <h4 mat-line class="ob-list-header">{{list.description}}</h4>
+                <h4 mat-line class="ob-list-header">{{list.name}}</h4>
                 <p mat-line class="ob-list-text"> {{list.longDescription}} </p>
             </span>
         </span>
@@ -34,4 +34,5 @@
             </mat-menu>
         </span>
     </div>
+    
 </mat-list-item>

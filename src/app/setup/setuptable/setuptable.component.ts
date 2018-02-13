@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DataSource} from '@angular/cdk/collections';
+import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 
 import { List } from '../model/list'
@@ -18,7 +18,6 @@ export class SetuptableComponent implements OnInit {
   errorMessage: String;
   
   mydisplayedColumns = ['listid','name','longDescription','status'];
-  //mydataSource = SIMPLELIST;
   mydataSource = new ListDataSource(this.listService);
   
   constructor(private listService: ListService) {}
@@ -27,9 +26,11 @@ export class SetuptableComponent implements OnInit {
     this.allLists = this.listService.getAllMyLists();
 	  this.allLists.subscribe(
 	    lists => this.lists = lists,
-	    //lists => console.log(lists),
 	    error =>  this.errorMessage = <any>error);
-	  );
+  }
+  
+  onRowClicked(row) {
+    console.log('Row clicked: ', row);
   }
   
 }
@@ -47,10 +48,6 @@ export class ListDataSource extends DataSource<any> {
   }
   disconnect() {}
 }
-
-const SIMPLELIST: List[] = [
-  {uid:"12fdfd", listid: 0, name: "Clothing List"}
-];  
 
 /*const MYLISTS: List[] = [
   {listid: 0,name: "Clothing List",longDescription: "A template list for warm trip clothing",category: ['rest1', 'rest2'],status: "active",items: ['item1', 'item2']},

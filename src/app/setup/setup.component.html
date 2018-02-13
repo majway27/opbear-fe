@@ -1,3 +1,5 @@
+<div *ngIf="errorMessage"> {{errorMessage}} </div> 
+
 <div class="ob-fab-add-group ob-fab-stacker">            
     <button mat-mini-fab color="primary" aria-label="Add a item" class="ob-fab-roomy">
         <mat-icon>add</mat-icon>
@@ -26,7 +28,7 @@
       <mat-tab label="Active">
         <mat-list>
           <h3 mat-subheader>All lists that aren't locked templates or archived.</h3>
-          <setuplist [lists]="setupListsActive">
+          <setuplist [lists]="activelists">
           </setuplist>
         </mat-list>
       </mat-tab>
@@ -34,7 +36,7 @@
       <mat-tab label="Templates">
         <mat-list>
           <h3 mat-subheader>Create copies of locked template lists for use.  Enables reuse of favorite lists.</h3>
-          <setuplist [lists]="setupListsLocked">
+          <setuplist [lists]="lockedlists">
           </setuplist>
         </mat-list>
       </mat-tab>
@@ -42,7 +44,7 @@
       <mat-tab label="Archived">
         <mat-list>
           <h3 mat-subheader>Save old lists here.  An archived list can be deleted.</h3>
-          <setuplist [lists]="setupListsArchived">
+          <setuplist [lists]="archivedlists">
           </setuplist>
         </mat-list>
       </mat-tab>

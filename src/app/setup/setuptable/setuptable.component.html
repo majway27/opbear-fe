@@ -1,4 +1,4 @@
-<div class="example-container mat-elevation-z8">
+<div class="obtablecontainer mat-elevation-z8">
   <mat-table #table [dataSource]="mydataSource">
 
     <!-- listid Column -->
@@ -23,7 +23,9 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="mydisplayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: mydisplayedColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: mydisplayedColumns"
+      (click)="onRowClicked(row)">
+    </mat-row>
   </mat-table>
 </div>
 

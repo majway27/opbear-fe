@@ -1,19 +1,20 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Setuplist } from "./setuplist";
+
+import { List } from '../model/list'
 
 @Component({
   selector: 'setuplist',
   templateUrl: './setuplist.component.html',
-  styleUrls: ['./setuplist.component.css']
+  styleUrls: ['./setuplist.component.css'],
 })
 export class SetuplistComponent implements OnInit {
 
   @Input()
-  lists: Setuplist[];
+  lists: List[];
+  //lists: Setuplist[];
   
   constructor() { }
 
   ngOnInit() {
   }
-
 }

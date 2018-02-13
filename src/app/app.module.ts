@@ -65,7 +65,7 @@ import { SignupComponent } from './user/signup/signup.component';
     MatInputModule,
     MatMenuModule,MatSidenavModule,
     MatProgressBarModule,MatProgressSpinnerModule,
-    MatTableModule, 
+    MatTableModule, MatPaginatorModule, MatSortModule,
     MatTabsModule,
     MatToolbarModule,MatTooltipModule,
     ReactiveFormsModule
