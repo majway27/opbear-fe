@@ -13,7 +13,6 @@ import { List } from "../model/list";
 @Injectable()
 export class ListService {
     
-    //setup_url = environment.setup_api_url;
     lists_url = environment.setup_api_url + 'list/';
     
     constructor(
@@ -27,15 +26,27 @@ export class ListService {
 	        .catch(this.handleError);
     }
     
-    /*
-    getBooksWithObservable(): Observable<Book[]> {
-        let uri = ""
-        console.log("GET WITH HEADERS");
-        return this.http.get(this.url + uri, this.setup_opts())
-            .map(this.extractData)
-	        .catch(this.handleErrorObservable);
+    createList(myNewList: List) {
+        let payload = {
+            "name": myNewList.name,
+            "longDescription": myNewList.longDescription
+        }
+        
+        const network$ = this.http.post(this.lists_url, 
+            //JSON.stringify({myNewList}),
+            payload,
+            this.setup_opts());
+
+        network$.subscribe(
+            () => console.log('HTTP post successful !'),
+            err => console.error(err),
+            () => console.log('monitoring completed ...')
+
+        );
+
+        return network$;
     }
-    */
+    
     private setup_headers() {
         let headers = new Headers();  
         headers.append('Authorization', this.getAuth());

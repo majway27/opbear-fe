@@ -16,7 +16,10 @@
 .mat-list {
     padding-top: 0px !important;
 }
-
+.mat-dialog-container {
+    /* 100 */
+    background: #e7e6df !important;
+}
 
 /* App Custom */
 .navimage { 

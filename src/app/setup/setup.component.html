@@ -1,7 +1,7 @@
 <div *ngIf="errorMessage"> {{errorMessage}} </div> 
 
 <div class="ob-fab-add-group ob-fab-stacker">            
-    <button mat-mini-fab color="primary" aria-label="Add a item" class="ob-fab-roomy">
+    <button mat-mini-fab color="primary" aria-label="Add a item" class="ob-fab-roomy" (click)="openAddListDialog()">
         <mat-icon>add</mat-icon>
     </button>
     <button mat-mini-fab color="accent" aria-label="Help" class="ob-fab-roomy">
@@ -20,6 +20,10 @@
             <input matInput placeholder="Filter" type="search" class="ob-form-input">
         </mat-form-field>
     </div>
+    
+    <li *ngIf="name">
+      You chose: <i>{{name}}, {{longDescription}}</i>
+    </li>
   </mat-card-title>
   
   <mat-card-content>
