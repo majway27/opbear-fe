@@ -29,7 +29,7 @@ import { LoginComponent } from './user/login/login.component';
 import { LogoutComponent } from './user/logout/logout.component';
 //import { NavbarComponent } from './user/navbar/navbar.component';
 import { ProfileComponent } from './user/profile/profile.component';
-import { SetupComponent, DialogAddSetupList } from './setup/setup.component';
+import { SetupComponent, DialogAddSetupList, DialogRenameSetupList } from './setup/setup.component';
 import { SetuplistComponent } from './setup/setuplist/setuplist.component';
 import { SetuplistitemComponent } from './setup/setuplistitem/setuplistitem.component';
 import { SetuptableComponent } from './setup/setuptable/setuptable.component';
@@ -45,7 +45,7 @@ import { SignupComponent } from './user/signup/signup.component';
     LogoutComponent,
     SignupComponent,
     ConfirmationComponent,
-    SetupComponent, DialogAddSetupList,
+    SetupComponent, DialogAddSetupList, DialogRenameSetupList,
     SetuplistComponent,
     SetuplistitemComponent,
     SetuptableComponent
@@ -56,7 +56,7 @@ import { SignupComponent } from './user/signup/signup.component';
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
-    MatButtonModule,MatButtonToggleModule,MatDialogModule,
+    MatButtonModule,MatButtonToggleModule,MatDialogModule, MatSnackBarModule,
     MatCardModule,
     MatCheckboxModule,
     MatGridListModule,MatListModule,
@@ -69,7 +69,7 @@ import { SignupComponent } from './user/signup/signup.component';
     MatToolbarModule,MatTooltipModule,
     ReactiveFormsModule
   ],
-  entryComponents: [DialogAddSetupList],
+  entryComponents: [ DialogAddSetupList, DialogRenameSetupList ],
   providers: [AwscogusermgrService,Jwtauthsvchelper,ListService],
   bootstrap: [AppComponent]
 })

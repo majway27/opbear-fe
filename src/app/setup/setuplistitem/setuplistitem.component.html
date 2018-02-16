@@ -29,14 +29,14 @@
         <mat-list-item *ngFor="let listitem of setupListItems" class="ob-list-item">
             <div class="ob-arrange-justify">
                 <span>
-                    <mat-checkbox color="primary">
+                    <mat-checkbox color="warn">
                         <h4 mat-line class="ob-list-header">{{listitem.description}}</h4>
                         <p mat-line class="ob-list-text"> {{listitem.longDescription}} </p>
                     </mat-checkbox>
                 </span>
                 <span>
                     <button mat-button [mat-menu-trigger-for]="listMenu" class="ob-inline-menu-button">
-                        <mat-icon>settings</mat-icon>
+                        <mat-icon color="primary">settings</mat-icon>
                     </button>
                     
                     <mat-menu #listMenu="matMenu" class="ob-inline-menu-contents">

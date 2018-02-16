@@ -110,3 +110,12 @@
 .ob-form-input {
     font-size: 14px;
 }
+
+.ob-snack-bar-color {
+  background-color: #414c31;
+  color: #e3e3df;
+
+  button {
+    color: #e3e3df;
+  }
+}

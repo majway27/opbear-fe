@@ -1,5 +1,5 @@
 import { environment } from '../../../environments/environment';
-import {Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import {Observable} from "rxjs/Observable";
 import { map } from "rxjs/operators";
@@ -8,12 +8,11 @@ import 'rxjs/add/operator/catch';
 import { AwscogusermgrService } from '../../user/awscogusermgr/awscogusermgr.service';
 
 import { List } from "../model/list";
-//import {Course} from "../model/course";
 
 @Injectable()
 export class ListService {
     
-    lists_url = environment.setup_api_url + 'list/';
+    lists_url = environment.setup_api_url + '/list';
     
     constructor(
         private http:Http,
@@ -26,8 +25,16 @@ export class ListService {
 	        .catch(this.handleError);
     }
     
+    getList(listId:string): Observable<List[]> {
+        let setupListUrl = this.lists_url + '/' + listId;
+        return this.http.get(setupListUrl, this.setup_opts())
+	        .map(this.extractData)
+	        .catch(this.handleError);
+    }
+    
     createList(myNewList: List) {
         let payload = {
+            "listid": myNewList.listid,
             "name": myNewList.name,
             "longDescription": myNewList.longDescription
         }
@@ -43,6 +50,36 @@ export class ListService {
             () => console.log('monitoring completed ...')
 
         );
+
+        return network$;
+    }
+    
+    deleteList(listId:string) {
+        let setupListDeleteUrl = this.lists_url + '/' + listId;
+        return this.http.delete(setupListDeleteUrl, this.setup_opts());
+    }
+    
+    updateList(updateThisList: List) {
+        // Since we have the complete list object at hand, pull id for uri build below.
+        let setupListUpdateUrl = this.lists_url + '/' + updateThisList.listid;
+        let payload = [
+            {
+                "name": updateThisList.name,
+                "longDescription": updateThisList.longDescription,
+                "status": updateThisList.status
+            }
+        ]
+        
+        const network$ =this.http.put(
+            setupListUpdateUrl, 
+            payload,
+            this.setup_opts());
+        
+        /*network$.subscribe(
+            () => console.log('HTTP post successful !'),
+            err => console.error(err),
+            () => console.log('monitoring completed ...')
+        );*/
 
         return network$;
     }

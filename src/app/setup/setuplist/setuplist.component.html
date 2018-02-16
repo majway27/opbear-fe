@@ -3,7 +3,7 @@
     <div class="ob-arrange-justify">
         <span class="ob-list-control" routerLink="/setup/{{list.listid}}">
             <span>
-                <mat-icon mat-list-icon color="primary">folder</mat-icon>
+                <mat-icon mat-list-icon color="accent">folder</mat-icon>
             </span>
             <span>
                 <h4 mat-line class="ob-list-header">{{list.name}}</h4>
@@ -13,23 +13,46 @@
         
         <span>
             <button mat-button [mat-menu-trigger-for]="listMenu" class="ob-inline-menu-button">
-                <mat-icon>settings</mat-icon>
+                <mat-icon color="primary">settings</mat-icon>
             </button>
             <mat-menu #listMenu="matMenu" class="ob-inline-menu-contents">
                 <div *ngIf="list.status==='active'">
-                    <button mat-menu-item>Lock</button>
-                    <button mat-menu-item>Archive</button>
+                    <span matTooltip="Moves list from Active to Archived" matTooltipPosition="left" matTooltipShowDelay="600">
+                        <button mat-menu-item (click)="changeListCommand('archive',list)">Archive</button>
+                    </span>
+                    <span matTooltip="Moves list from Active to Templates" matTooltipPosition="left" matTooltipShowDelay="600">
+                        <button mat-menu-item (click)="changeListCommand('lock',list)">Lock</button>
+                    </span>
+                    <span matTooltip="Rename this List" matTooltipPosition="left" matTooltipShowDelay="600">
+                        <button mat-menu-item (click)="changeListCommand('rename',list)">Rename</button>
+                    </span>
                 </div>
                 
                 <div *ngIf="list.status==='locked'">
-                    <button mat-menu-item>Copy to "Active"</button>
-                    <button mat-menu-item>Un-Lock</button>
-                    <button mat-menu-item>Archive</button>
+                    <span matTooltip="Moves list from Templates to Archived" matTooltipPosition="left" matTooltipShowDelay="600">
+                        <button mat-menu-item (click)="changeListCommand('archive',list)">Archive</button>
+                    </span>
+                    <span matTooltip="Creates a copy of this list in Active" matTooltipPosition="left" matTooltipShowDelay="600">
+                        <button mat-menu-item (click)="changeListCommand('copy',list)">Copy</button>
+                    </span>
+                    <span matTooltip="Rename this List" matTooltipPosition="left" matTooltipShowDelay="600">
+                        <button mat-menu-item (click)="changeListCommand('rename',list)">Rename</button>
+                    </span>
+                    <span matTooltip="Moves the list from Templates to Active" matTooltipPosition="left" matTooltipShowDelay="600">
+                        <button mat-menu-item (click)="changeListCommand('unLock',list)">Unlock</button>
+                    </span>
                 </div>
                 
                 <div *ngIf="list.status==='archived'">
-                    <button mat-menu-item>Un-Archive</button>
-                    <button mat-menu-item>Delete</button>
+                    <span matTooltip="Deletes the list forever!" matTooltipPosition="left" matTooltipShowDelay="600">
+                        <button mat-menu-item (click)="changeListCommand('phasersSetToKill',list)">Delete</button>
+                    </span>
+                    <span matTooltip="Rename this List" matTooltipPosition="left" matTooltipShowDelay="600">
+                        <button mat-menu-item (click)="changeListCommand('rename',list)">Rename</button>
+                    </span>
+                    <span matTooltip="Moves the list from Archived to Active" matTooltipPosition="left" matTooltipShowDelay="600">
+                        <button mat-menu-item (click)="changeListCommand('unArchive',list)">Un-Archive</button>
+                    </span>
                 </div>
             </mat-menu>
         </span>

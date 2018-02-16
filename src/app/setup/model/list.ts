@@ -1,31 +1,17 @@
+import { v4 as uuid } from 'uuid';
+
 export class List {
   uid: string;
-  listid: number;
+  listid: string;
   name: string;
   longDescription: string;
   category: {};
   status: string;
   items: {};
   constructor(name:string, longDescription:string) {
+    this.listid = uuid();
     this.name = name;
     this.longDescription = longDescription;
+    this.status = "active"
   }
 };
-
-/*export interface List {
-  uid: string;
-  listid: number;
-  name: string;
-  longDescription: string;
-  category: {};
-  status: string;
-  items: {};
-};*/
-
-/*export class List {
-  uid: string;
-  listid: string;
-  name: string;
-  constructor() { 
-  }
-};*/

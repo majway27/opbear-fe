@@ -21,9 +21,6 @@
         </mat-form-field>
     </div>
     
-    <li *ngIf="name">
-      You chose: <i>{{name}}, {{longDescription}}</i>
-    </li>
   </mat-card-title>
   
   <mat-card-content>
@@ -32,7 +29,7 @@
       <mat-tab label="Active">
         <mat-list>
           <h3 mat-subheader>All lists that aren't locked templates or archived.</h3>
-          <setuplist [lists]="activelists">
+          <setuplist [lists]="activelists" (listAction)="listStatusChange($event)">
           </setuplist>
         </mat-list>
       </mat-tab>
@@ -40,7 +37,7 @@
       <mat-tab label="Templates">
         <mat-list>
           <h3 mat-subheader>Create copies of locked template lists for use.  Enables reuse of favorite lists.</h3>
-          <setuplist [lists]="lockedlists">
+          <setuplist [lists]="lockedlists" (listAction)="listStatusChange($event)">
           </setuplist>
         </mat-list>
       </mat-tab>
@@ -48,7 +45,7 @@
       <mat-tab label="Archived">
         <mat-list>
           <h3 mat-subheader>Save old lists here.  An archived list can be deleted.</h3>
-          <setuplist [lists]="archivedlists">
+          <setuplist [lists]="archivedlists" (listAction)="listStatusChange($event)">
           </setuplist>
         </mat-list>
       </mat-tab>
