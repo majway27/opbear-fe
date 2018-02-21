@@ -43,6 +43,7 @@ export class SetupComponent implements OnInit {
 	  this.allListsObs = this.listService.getAllMyLists();
     this.allListsObs.subscribe(
       lists => this.activelists = lists.filter(function (el) {return el.status==="active"}),
+      //lists => console.log(lists)
     );
     this.allListsObs.subscribe(
       lists => this.lockedlists = lists.filter(function (el) {return el.status==="locked"}),
@@ -66,6 +67,8 @@ export class SetupComponent implements OnInit {
   }
   
   openRenameListDialog(targetList: List, callback: any) {
+    
+    console.log(targetList);
     let dialogRef = this.dialog.open(DialogRenameSetupList, {
       width: '240px',
       data: { name: targetList.name, longDescription: targetList.longDescription }
@@ -75,6 +78,7 @@ export class SetupComponent implements OnInit {
       //console.log('The dialog was closed');
       targetList.name = result.name;
       targetList.longDescription = result.longDescription;
+      console.log(targetList)
       callback.updateList(targetList);
     });
     

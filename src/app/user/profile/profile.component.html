@@ -41,7 +41,7 @@
 
             <div *ngIf="!userprops">
                 <mat-list-item>
-                    <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
+                    <mat-spinner [diameter]="80" mode="indeterminate" color="primary"></mat-spinner>
                 </mat-list-item>
             </div>
             <div *ngIf="userprops">

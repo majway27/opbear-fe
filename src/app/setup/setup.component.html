@@ -29,24 +29,39 @@
       <mat-tab label="Active">
         <mat-list>
           <h3 mat-subheader>All lists that aren't locked templates or archived.</h3>
-          <setuplist [lists]="activelists" (listAction)="listStatusChange($event)">
-          </setuplist>
+          <div *ngIf="activelists">
+            <setuplist [lists]="activelists" (listAction)="listStatusChange($event)">
+            </setuplist>
+          </div>
+          <div *ngIf="!activelists">
+            <mat-spinner [diameter]="60" mode="indeterminate" color="primary"></mat-spinner>
+          </div>
         </mat-list>
       </mat-tab>
       
       <mat-tab label="Templates">
         <mat-list>
           <h3 mat-subheader>Create copies of locked template lists for use.  Enables reuse of favorite lists.</h3>
-          <setuplist [lists]="lockedlists" (listAction)="listStatusChange($event)">
-          </setuplist>
+          <div *ngIf="lockedlists">
+            <setuplist [lists]="lockedlists" (listAction)="listStatusChange($event)">
+            </setuplist>
+          </div>
+          <div *ngIf="!lockedlists">
+            <mat-spinner [diameter]="60" mode="indeterminate" color="primary"></mat-spinner>
+          </div>
         </mat-list>
       </mat-tab>
       
       <mat-tab label="Archived">
         <mat-list>
           <h3 mat-subheader>Save old lists here.  An archived list can be deleted.</h3>
-          <setuplist [lists]="archivedlists" (listAction)="listStatusChange($event)">
-          </setuplist>
+          <div *ngIf="archivedlists">
+            <setuplist [lists]="archivedlists" (listAction)="listStatusChange($event)">
+            </setuplist>
+          </div>
+          <div *ngIf="!archivedlists">
+            <mat-spinner [diameter]="60" mode="indeterminate" color="primary"></mat-spinner>
+          </div>
         </mat-list>
       </mat-tab>
       

@@ -1,5 +1,5 @@
 <div class="ob-fab-add-group ob-fab-stacker">            
-    <button mat-mini-fab color="primary" aria-label="Add a item" class="ob-fab-roomy">
+    <button mat-mini-fab (click)="openAddListItemDialog()" color="primary" aria-label="Add a item" class="ob-fab-roomy">
         <mat-icon>add</mat-icon>
     </button>
         <button mat-mini-fab (click)="goBack()" color="accent" aria-label="Go Back" class="ob-fab-roomy">
@@ -14,8 +14,15 @@
   
   <mat-card-title class="thinner">
     <div class="ob-menu-control">
-        <span>This is a Long List Name
-            <mat-icon color="primary" class="ob-card-apex-icon">work</mat-icon>
+        <span>
+            <div *ngIf="myList">
+                {{myList.name}}
+                <mat-icon color="primary" class="ob-card-apex-icon">work</mat-icon>
+            </div>
+            <div *ngIf="!myList">
+                <mat-spinner [diameter]="40" mode="indeterminate" color="primary"></mat-spinner>
+                <mat-icon color="accent" class="ob-card-apex-icon">work</mat-icon>
+            </div>
         </span>
         <mat-form-field >
             <input matInput placeholder="Filter" type="search" class="ob-form-input">
@@ -26,26 +33,32 @@
   <mat-card-content>
 
     <mat-list>
-        <mat-list-item *ngFor="let listitem of setupListItems" class="ob-list-item">
-            <div class="ob-arrange-justify">
-                <span>
-                    <mat-checkbox color="warn">
-                        <h4 mat-line class="ob-list-header">{{listitem.description}}</h4>
-                        <p mat-line class="ob-list-text"> {{listitem.longDescription}} </p>
-                    </mat-checkbox>
-                </span>
-                <span>
-                    <button mat-button [mat-menu-trigger-for]="listMenu" class="ob-inline-menu-button">
-                        <mat-icon color="primary">settings</mat-icon>
-                    </button>
-                    
-                    <mat-menu #listMenu="matMenu" class="ob-inline-menu-contents">
-                            <button mat-menu-item>Copy</button>
-                            <button mat-menu-item>Delete</button>
-                    </mat-menu>
-                </span>
-            </div>
-        </mat-list-item>
+        <div *ngIf="!myList">
+            <mat-spinner [diameter]="80" mode="indeterminate" color="accent"></mat-spinner>
+        </div>
+        <div *ngIf="myList">
+            <mat-list-item *ngFor="let listitem of myList.listitems" class="ob-list-item">
+                <div class="ob-arrange-justify">
+                    <span>
+                        <mat-checkbox color="warn" [(ngModel)]="listitem.checked" (change)="onCheckListItemChange($event,listitem.listitemid)">
+                            <h4 mat-line class="ob-list-header">{{listitem.name}}</h4>
+                            <p mat-line class="ob-list-text"> {{listitem.longDescription}} </p>
+                        </mat-checkbox>
+                    </span>
+                    <span>
+                        <button mat-button [mat-menu-trigger-for]="listMenu" class="ob-inline-menu-button">
+                            <mat-icon color="primary">settings</mat-icon>
+                        </button>
+                        
+                        <mat-menu #listMenu="matMenu" class="ob-inline-menu-contents">
+                                <button mat-menu-item (click)="copyMyListItem(listitem.listitemid)">Copy</button>
+                                <button mat-menu-item (click)="openRenameListItemDialog(listitem)">Rename</button>
+                                <button mat-menu-item (click)="deleteMyListItem(listitem.listitemid)">Delete</button>
+                        </mat-menu>
+                    </span>
+                </div>
+            </mat-list-item>
+        </div>
     </mat-list>
     
   </mat-card-content>

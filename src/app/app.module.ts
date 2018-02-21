@@ -31,7 +31,7 @@ import { LogoutComponent } from './user/logout/logout.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { SetupComponent, DialogAddSetupList, DialogRenameSetupList } from './setup/setup.component';
 import { SetuplistComponent } from './setup/setuplist/setuplist.component';
-import { SetuplistitemComponent } from './setup/setuplistitem/setuplistitem.component';
+import { SetuplistitemComponent, DialogAddSetupListItem, DialogRenameSetupListItem } from './setup/setuplistitem/setuplistitem.component';
 import { SetuptableComponent } from './setup/setuptable/setuptable.component';
 import { SignupComponent } from './user/signup/signup.component';
 
@@ -47,7 +47,7 @@ import { SignupComponent } from './user/signup/signup.component';
     ConfirmationComponent,
     SetupComponent, DialogAddSetupList, DialogRenameSetupList,
     SetuplistComponent,
-    SetuplistitemComponent,
+    SetuplistitemComponent, DialogAddSetupListItem, DialogRenameSetupListItem,
     SetuptableComponent
   ],
   imports: [
@@ -69,8 +69,16 @@ import { SignupComponent } from './user/signup/signup.component';
     MatToolbarModule,MatTooltipModule,
     ReactiveFormsModule
   ],
-  entryComponents: [ DialogAddSetupList, DialogRenameSetupList ],
-  providers: [AwscogusermgrService,Jwtauthsvchelper,ListService],
+  entryComponents: [ 
+    DialogAddSetupList, 
+    DialogRenameSetupList, 
+    DialogAddSetupListItem, 
+    DialogRenameSetupListItem 
+    ],
+  providers: [
+    AwscogusermgrService,
+    Jwtauthsvchelper,
+    ListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

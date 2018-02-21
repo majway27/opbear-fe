@@ -8,6 +8,8 @@ import 'rxjs/add/operator/catch';
 import { AwscogusermgrService } from '../../user/awscogusermgr/awscogusermgr.service';
 
 import { List } from "../model/list";
+import { Listitem } from "../model/listitem";
+
 
 @Injectable()
 export class ListService {
@@ -25,7 +27,7 @@ export class ListService {
 	        .catch(this.handleError);
     }
     
-    getList(listId:string): Observable<List[]> {
+    getMyList(listId:string): Observable<List> {
         let setupListUrl = this.lists_url + '/' + listId;
         return this.http.get(setupListUrl, this.setup_opts())
 	        .map(this.extractData)
@@ -33,23 +35,25 @@ export class ListService {
     }
     
     createList(myNewList: List) {
+        
         let payload = {
             "listid": myNewList.listid,
             "name": myNewList.name,
-            "longDescription": myNewList.longDescription
-        }
+            "longDescription": myNewList.longDescription,
+            "listitems": myNewList.listitems
+            }
         
         const network$ = this.http.post(this.lists_url, 
             //JSON.stringify({myNewList}),
             payload,
             this.setup_opts());
 
-        network$.subscribe(
+        /*network$.subscribe(
             () => console.log('HTTP post successful !'),
             err => console.error(err),
             () => console.log('monitoring completed ...')
 
-        );
+        );*/
 
         return network$;
     }
@@ -62,25 +66,20 @@ export class ListService {
     updateList(updateThisList: List) {
         // Since we have the complete list object at hand, pull id for uri build below.
         let setupListUpdateUrl = this.lists_url + '/' + updateThisList.listid;
-        let payload = [
+
+        let payload = 
             {
                 "name": updateThisList.name,
                 "longDescription": updateThisList.longDescription,
-                "status": updateThisList.status
+                "status": updateThisList.status,
+                "listitems": updateThisList.listitems
             }
-        ]
         
         const network$ =this.http.put(
             setupListUpdateUrl, 
             payload,
             this.setup_opts());
         
-        /*network$.subscribe(
-            () => console.log('HTTP post successful !'),
-            err => console.error(err),
-            () => console.log('monitoring completed ...')
-        );*/
-
         return network$;
     }
     
