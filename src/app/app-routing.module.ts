@@ -1,12 +1,12 @@
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { Jwtauthsvchelper } from './user/jwtauthsvchelper/jwtauthsvchelper.service';
+import { AuthService } from './user/services/auth.service';
+import { AuthGuardService } from './auth-guard.service';
 
 import { ConfirmationComponent } from './user/confirmation/confirmation.component';
 import { DashboardComponent } from './user/dashboard/dashboard.component';
 import { LoginComponent } from './user/login/login.component';
-import { LogoutComponent } from './user/logout/logout.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { SetupComponent } from './setup/setup.component';
 import { SetuptableComponent } from './setup/setuptable/setuptable.component';
@@ -15,14 +15,13 @@ import { SignupComponent } from './user/signup/signup.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard',  component: DashboardComponent, canActivate: [Jwtauthsvchelper]  },
+  { path: 'dashboard',  component: DashboardComponent, canActivate: [AuthGuardService]  },
   { path: 'confirmation',  component: ConfirmationComponent },
   { path: 'login',  component: LoginComponent },
-  { path: 'logout',  component: LogoutComponent },
-  { path: 'profile',  component: ProfileComponent, canActivate: [Jwtauthsvchelper] },
-  { path: 'setup',  component: SetupComponent, canActivate: [Jwtauthsvchelper]  },
-  { path: 'setup/:id',  component: SetuplistitemComponent, canActivate: [Jwtauthsvchelper]  },
-  { path: 'setuptable',  component: SetuptableComponent, canActivate: [Jwtauthsvchelper]  },
+  { path: 'profile',  component: ProfileComponent, canActivate: [AuthGuardService] },
+  { path: 'setup',  component: SetupComponent, canActivate: [AuthGuardService]  },
+  { path: 'setup/:id',  component: SetuplistitemComponent, canActivate: [AuthGuardService]  },
+  { path: 'setuptable',  component: SetuptableComponent, canActivate: [AuthGuardService]  },
   { path: 'signup',  component: SignupComponent },
   { path: 'unauthorized',  component: LoginComponent }
 ];

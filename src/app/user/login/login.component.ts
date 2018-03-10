@@ -1,40 +1,25 @@
-import { environment } from '../../../environments/environment';
-import { Component, Injectable, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
-import { AwscogusermgrService } from '../awscogusermgr/awscogusermgr.service';
-import { Jwtauthsvchelper } from '../jwtauthsvchelper/jwtauthsvchelper.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-
-@Injectable()
 export class LoginComponent implements OnInit {
 
-  constructor(
-    public router: Router, 
-    private awscogusermgrService: AwscogusermgrService,
-    private  jwtauthsvchelper:  Jwtauthsvchelper) {
+  constructor( private authService: AuthService ) {
   }
-
-  ngOnInit() {}
+  
+  ngOnInit() {
+    // Auto-login if creds are present in local storage
+    if (localStorage.getItem('ob.username')) {
+      this.authService.rememberme();
+    }
+  }
 
   login(username,password) {
-    //event.preventDefault(); //Firefox issue
-    console.log("Requesting Login");
-    this.awscogusermgrService.firstLogin(
-      username, 
-      password, 
-      this
-    );
-    //console.log("Call Returned");
+    this.authService.login(username,password)
   }
-  
-  goHome() {
-    this.jwtauthsvchelper.goHome()
-  }
-  
 }

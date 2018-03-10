@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
 
 import { AwscogusermgrService } from '../awscogusermgr/awscogusermgr.service';
-import { Jwtauthsvchelper } from '../jwtauthsvchelper/jwtauthsvchelper.service';
+import { AuthService } from '../services/auth.service';
 import { Userprop } from '../userprop/userprop';
 
 @Component({
@@ -16,23 +16,39 @@ import { Userprop } from '../userprop/userprop';
 @Injectable()
 export class ProfileComponent implements OnInit {
 
-  username: string;
   userprops: Userprop[];
   errorMessage: String;
   subscription: Subscription;
+  myUserName = "";
 
   constructor(
     public router: Router, 
     private awscogusermgrService: AwscogusermgrService,
-    private jwtauthsvchelper: Jwtauthsvchelper) { 
-    this.username=""; 
-    this.subscription = this.awscogusermgrService.retOb()
-      .subscribe(userprops => { this.userprops = userprops; });
+    private authService: AuthService ) { 
+    /*this.subscription = this.awscogusermgrService.retOb()
+      .subscribe(userprops => { this.userprops = userprops; });*/
   }
 
   ngOnInit() {
-    this.username = this.jwtauthsvchelper.getUserName();
-    this.awscogusermgrService.getCognitoUserDetails();
+    const myThis = this;
+    
+    this.authService.isAuthenticated()
+      .subscribe(
+        result => {
+          this.myUserName = result.username;
+          this.authService.myUserDetails(result)
+              .subscribe(
+                result => {
+                  console.log(result);
+                  this.userprops = result;
+                },
+                error => {
+                    console.log(error);
+                });
+        },
+        error => {
+          console.log(error);
+        });
   }
 
   ngOnDestroy() {
@@ -45,8 +61,7 @@ export class ProfileComponent implements OnInit {
   }
   
   myLogout() {
-    this.awscogusermgrService.logoutUser();
-    this.router.navigate(['login']);
+    this.authService.logout();
   }
   
 }

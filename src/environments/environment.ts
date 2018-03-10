@@ -6,6 +6,15 @@
 export const environment = {
   production: false,
   
+  obamplify: {
+    Auth: {
+      identityPoolId: 'us-west-2:6b2f41f5-fa34-4150-803d-f01bb21ba108',
+      region: 'us-west-2',
+      userPoolId: 'us-west-2_0ow0b3Izn',
+      userPoolWebClientId: 'da2jpetir7aq6untoo53afmdo'
+    }
+  },
+  
   region: 'us-west-2',
   identityPoolId: 'us-west-2:6b2f41f5-fa34-4150-803d-f01bb21ba108',
   userPoolId: 'us-west-2_0ow0b3Izn',

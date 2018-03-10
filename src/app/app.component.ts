@@ -1,33 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { Jwtauthsvchelper } from './user/jwtauthsvchelper/jwtauthsvchelper.service';
+import { AuthService } from './user/services/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   
   title = 'Optimistic Bearings';
+  loggedIn = false;
   
-  constructor(private  jwtauthsvchelper:  Jwtauthsvchelper) { }
+  constructor( private authService: AuthService ) { }
   
-  loggedIn() {
-    if (this.jwtauthsvchelper.loggedIn()) {
-      //console.log("Localstorage getitem-jwt: " + localStorage.getItem('token')); 
-      return true
-    } else {
-      return false
-    }
-  }
-  
-  getMyUser() {
-    if (this.jwtauthsvchelper.getUserName()) {
-      return this.jwtauthsvchelper.getUserName()
-    } else {
-      return false
-    }
+  ngOnInit(): void {
+    this.authService.isAuthenticated()
+      .subscribe(
+        result => {
+          this.loggedIn = true;
+        },
+        error => {
+          console.log(error);
+          return false;  //overkill
+        });
   }
   
 }

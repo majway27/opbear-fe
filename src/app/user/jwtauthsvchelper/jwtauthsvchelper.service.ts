@@ -14,17 +14,23 @@ export class Jwtauthsvchelper implements CanActivate {
     ) {}
 
   canActivate() {
+    return true;
+  }
+  /*canActivate() {
     if(this.loggedIn()) {
       return true;
     } else {
       this.router.navigate(['unauthorized']);
       return false;
     }
-  }
+  }*/
 
   loggedIn() {
-    return tokenNotExpired();
+    return true;
   }
+  /*loggedIn() {
+    return tokenNotExpired();
+  }*/
   
   getUserName() {
     /*if (localStorage.getItem('username')) {

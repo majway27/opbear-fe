@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Jwtauthsvchelper } from '../jwtauthsvchelper/jwtauthsvchelper.service';
-//import { AwscogusermgrService } from '../awscogusermgr/awscogusermgr.service';
+import { AuthService } from '../services/auth.service';
+
 
 @Component({
   selector: 'my-dashboard',
@@ -11,20 +11,24 @@ import { Jwtauthsvchelper } from '../jwtauthsvchelper/jwtauthsvchelper.service';
 export class DashboardComponent { 
  
   title = 'Optimistic Bearings - Home';
- 
-  myUser = this.jwtauthsvchelper.getUserName();
- 
-  constructor(private  jwtauthsvchelper:  Jwtauthsvchelper) { }
+  myUser = "";
+  loggedIn = false;
+
+  constructor( private authservice: AuthService ) { }
   
-  ngOnInit(): void {}
-  
-  loggedIn() {
-    if (this.jwtauthsvchelper.loggedIn()) {
-      //console.log("Localstorage getitem-jwt: " + localStorage.getItem('token')); 
-      return true
-    } else {
-      return false
-    }
+  ngOnInit(): void {
+
+    this.authservice.isAuthenticated()
+      .subscribe(
+        result => {
+          //console.log(result);
+          this.loggedIn = true;
+          this.myUser = result.username;
+        },
+        error => {
+          console.log(error);
+          return false;
+        });
   }
 
 }

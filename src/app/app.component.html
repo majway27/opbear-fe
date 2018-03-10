@@ -8,7 +8,7 @@
         
         <mat-nav-list>
             
-            <div *ngIf="loggedIn()">
+            <div *ngIf="loggedIn">
                 <a mat-list-item routerLink="/">
                     <mat-icon color="primary">home</mat-icon>
                     <span class="menu-leader">Home</span>
@@ -45,7 +45,7 @@
                 </a>
             </div>
     
-            <div *ngIf="!loggedIn()">
+            <div *ngIf="!loggedIn">
                 <a mat-list-item routerLink="/login">
                     <mat-icon color="primary">input</mat-icon>
                     <span class="menu-leader">Login</span>
