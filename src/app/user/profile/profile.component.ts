@@ -1,11 +1,8 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
-import { AwscogusermgrService } from '../awscogusermgr/awscogusermgr.service';
+
 import { AuthService } from '../services/auth.service';
-import { Userprop } from '../userprop/userprop';
+import { Userprop } from '../model/userprop';
 
 @Component({
   selector: 'app-profile',
@@ -13,25 +10,17 @@ import { Userprop } from '../userprop/userprop';
   styleUrls: ['./profile.component.css']
 })
 
-@Injectable()
 export class ProfileComponent implements OnInit {
 
   userprops: Userprop[];
   errorMessage: String;
-  subscription: Subscription;
   myUserName = "";
 
   constructor(
-    public router: Router, 
-    private awscogusermgrService: AwscogusermgrService,
     private authService: AuthService ) { 
-    /*this.subscription = this.awscogusermgrService.retOb()
-      .subscribe(userprops => { this.userprops = userprops; });*/
   }
 
   ngOnInit() {
-    const myThis = this;
-    
     this.authService.isAuthenticated()
       .subscribe(
         result => {
@@ -51,15 +40,6 @@ export class ProfileComponent implements OnInit {
         });
   }
 
-  ngOnDestroy() {
-      // unsubscribe to ensure no memory leaks
-      this.subscription.unsubscribe();
-  }
-
-  s3Test() {
-    this.awscogusermgrService.s3Test();
-  }
-  
   myLogout() {
     this.authService.logout();
   }

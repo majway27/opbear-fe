@@ -15,7 +15,7 @@ import { ListService } from './services/list.service';
 })
 export class SetupComponent implements OnInit {
 
-  allListsObs: Observable<List[]>
+  allLists$: Observable<List[]>
   
   activelists: List[];
   lockedlists: List[];
@@ -40,15 +40,15 @@ export class SetupComponent implements OnInit {
 	}
 	
 	refreshList() {
-	  this.allListsObs = this.listService.getAllMyLists();
-    this.allListsObs.subscribe(
+	  this.allLists$ = this.listService.getAllMyLists();
+    this.allLists$.subscribe(
       lists => this.activelists = lists.filter(function (el) {return el.status==="active"}),
       //lists => console.log(lists)
     );
-    this.allListsObs.subscribe(
+    this.allLists$.subscribe(
       lists => this.lockedlists = lists.filter(function (el) {return el.status==="locked"}),
     );
-    this.allListsObs.subscribe(
+    this.allLists$.subscribe(
       lists => this.archivedlists = lists.filter(function (el) {return el.status==="archived"}),
     );
 	}
@@ -91,7 +91,7 @@ export class SetupComponent implements OnInit {
         command.commandListObject.status = "locked";
         this.lockedlists.push(command.commandListObject);
         this.pruneList(this.activelists, command.commandListObject.listid);
-        let network$ = this.listService.updateList(command.commandListObject);
+        let network$ = this.listService.updateMyList(command.commandListObject);
         network$.subscribe(
             //() => console.log('HTTP put successful'),
             () => this.successHelper("List Locked"),
@@ -102,7 +102,7 @@ export class SetupComponent implements OnInit {
         command.commandListObject.status = "active";
         this.activelists.push(command.commandListObject);
         this.pruneList(this.lockedlists, command.commandListObject.listid);
-        let network$ = this.listService.updateList(command.commandListObject);
+        let network$ = this.listService.updateMyList(command.commandListObject);
         network$.subscribe(
             //() => console.log('HTTP put successful'),
             () => this.successHelper("List Unlocked"),
@@ -119,7 +119,7 @@ export class SetupComponent implements OnInit {
         catch(e) {
           // One of the above will be empty, ignore
         }
-        let network$ = this.listService.updateList(command.commandListObject);
+        let network$ = this.listService.updateMyList(command.commandListObject);
         network$.subscribe(
             //() => console.log('HTTP put successful'),
             () => this.successHelper("List Archived"),
@@ -130,7 +130,7 @@ export class SetupComponent implements OnInit {
         command.commandListObject.status = "active";
         this.activelists.push(command.commandListObject);
         this.pruneList(this.archivedlists, command.commandListObject.listid);
-        let network$ = this.listService.updateList(command.commandListObject);
+        let network$ = this.listService.updateMyList(command.commandListObject);
         network$.subscribe(
             //() => console.log('HTTP put successful'),
             () => this.successHelper("List Un-Archived"),
@@ -146,7 +146,7 @@ export class SetupComponent implements OnInit {
           newLongDescription);
         // Create
         this.activelists.push(copyList);
-        let network$ = this.listService.createList(copyList);
+        let network$ = this.listService.createMyList(copyList);
         network$.subscribe(
             //() => console.log('HTTP post successful'),
             () => this.successHelper("List Copied"),
@@ -155,7 +155,7 @@ export class SetupComponent implements OnInit {
         
       case "phasersSetToKill": {
         this.pruneList(this.archivedlists, command.commandListObject.listid);
-        let network$ = this.listService.deleteList(command.commandListObject.listid);
+        let network$ = this.listService.deleteMyList(command.commandListObject.listid);
         network$.subscribe(
             //() => console.log('HTTP Delete successful'),
             () => this.successHelper("List Deleted"),
@@ -174,7 +174,7 @@ export class SetupComponent implements OnInit {
   
   private createList(myNewList: List) {
       this.activelists.push(myNewList);
-      const network$ = this.listService.createList(myNewList);
+      const network$ = this.listService.createMyList(myNewList);
       network$.subscribe(
         () => this.successHelper("List Created"),
         err => this.errorHelper(err));
@@ -194,7 +194,7 @@ export class SetupComponent implements OnInit {
           this.activelists.push(targetList);
         } break;
       }
-      const network$ = this.listService.updateList(targetList);
+      const network$ = this.listService.updateMyList(targetList);
       network$.subscribe(
         () => this.successHelper("List Updated"),
         err => this.errorHelper(err));

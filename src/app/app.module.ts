@@ -19,10 +19,8 @@ import 'hammerjs';
 
 import { AppComponent } from './app.component';
 
-import { AwscogusermgrService } from './user/awscogusermgr/awscogusermgr.service';
 import { AuthService } from './user/services/auth.service';
 import { AuthGuardService } from './auth-guard.service';
-import { Jwtauthsvchelper } from './user/jwtauthsvchelper/jwtauthsvchelper.service';
 import { ListService } from './setup/services/list.service';
 
 import { ConfirmationComponent } from './user/confirmation/confirmation.component';
@@ -33,7 +31,6 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { SetupComponent, DialogAddSetupList, DialogRenameSetupList } from './setup/setup.component';
 import { SetuplistComponent } from './setup/setuplist/setuplist.component';
 import { SetuplistitemComponent, DialogAddSetupListItem, DialogRenameSetupListItem } from './setup/setuplistitem/setuplistitem.component';
-import { SetuptableComponent } from './setup/setuptable/setuptable.component';
 import { SignupComponent } from './user/signup/signup.component';
 
 
@@ -50,7 +47,6 @@ import { SignupComponent } from './user/signup/signup.component';
     SetupComponent, DialogAddSetupList, DialogRenameSetupList,
     SetuplistComponent,
     SetuplistitemComponent, DialogAddSetupListItem, DialogRenameSetupListItem,
-    SetuptableComponent,
     
   ],
   imports: [
@@ -79,10 +75,8 @@ import { SignupComponent } from './user/signup/signup.component';
     DialogRenameSetupListItem 
     ],
   providers: [
-    AwscogusermgrService,
     AuthService,
     AuthGuardService,
-    Jwtauthsvchelper,
     ListService],
   bootstrap: [AppComponent]
 })

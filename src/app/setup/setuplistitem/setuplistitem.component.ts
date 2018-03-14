@@ -48,7 +48,7 @@ export class SetuplistitemComponent implements OnInit {
   copyMyListItem(listItemId:string) {
     const list = this.listBuildHelper();
     list.copyListItem(listItemId);
-    const network$ = this.listService.updateList(list);
+    const network$ = this.listService.updateMyList(list);
       network$.subscribe(
         () => this.successHelper("List Updated"),
         err => this.errorHelper(err));
@@ -57,7 +57,7 @@ export class SetuplistitemComponent implements OnInit {
   renameMyListItem(listItemId:string, name:string, longDescription: string) {
     const list = this.listBuildHelper();
     list.renameListItem(listItemId, name, longDescription);
-    const network$ = this.listService.updateList(list);
+    const network$ = this.listService.updateMyList(list);
       network$.subscribe(
         () => this.successHelper("List Updated"),
         err => this.errorHelper(err));
@@ -69,7 +69,7 @@ export class SetuplistitemComponent implements OnInit {
 	  console.log(evt);
     const list = this.listBuildHelper();
     list.checkListItem(listItemId, evt.checked);
-    const network$ = this.listService.updateList(list);
+    const network$ = this.listService.updateMyList(list);
       network$.subscribe(
         () => this.successHelper("List Updated"),
         err => this.errorHelper(err));
@@ -78,7 +78,7 @@ export class SetuplistitemComponent implements OnInit {
   deleteMyListItem(listId:string) {
     const list = this.listBuildHelper();
     list.deleteListItem(listId);
-    const network$ = this.listService.updateList(list);
+    const network$ = this.listService.updateMyList(list);
       network$.subscribe(
         () => this.successHelper("List Updated"),
         err => this.errorHelper(err));
@@ -92,7 +92,7 @@ export class SetuplistitemComponent implements OnInit {
     
     dialogRef.afterClosed().subscribe(result => {
       let list = this.addListItemHelper(result);
-      const network$ = this.listService.updateList(list);
+      const network$ = this.listService.updateMyList(list);
       network$.subscribe(
         () => this.successHelper("List Updated"),
         err => this.errorHelper(err));

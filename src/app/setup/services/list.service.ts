@@ -2,10 +2,12 @@ import { environment } from '../../../environments/environment';
 import { Injectable } from "@angular/core";
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import {Observable} from "rxjs/Observable";
-import { map } from "rxjs/operators";
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/map';
+
 import 'rxjs/add/operator/catch';
 
-import { AwscogusermgrService } from '../../user/awscogusermgr/awscogusermgr.service';
+import { AuthService } from '../../user/services/auth.service';
 
 import { List } from "../model/list";
 import { Listitem } from "../model/listitem";
@@ -18,23 +20,39 @@ export class ListService {
     
     constructor(
         private http:Http,
-        private awscogusermgrService:AwscogusermgrService
+        private authService:AuthService
         ) {}
     
     getAllMyLists(): Observable<List[]> {
-        return this.http.get(this.lists_url, this.setup_opts())
-	        .map(this.extractData)
-	        .catch(this.handleError);
+        const myThis = this;
+        const getAllMyListsCall$ = this.getAmplifyAuth().flatMap(
+            function (session) {
+                return myThis.getAllLists(
+                    session.getSignInUserSession()
+                        .getIdToken()
+                            .getJwtToken(session))
+            }
+        );
+        return getAllMyListsCall$;
     }
     
     getMyList(listId:string): Observable<List> {
-        let setupListUrl = this.lists_url + '/' + listId;
-        return this.http.get(setupListUrl, this.setup_opts())
-	        .map(this.extractData)
-	        .catch(this.handleError);
+        const myThis = this;
+        const getMyListCall$ = this.getAmplifyAuth().flatMap(
+            function (session) {
+                return myThis.getList(
+                    session.getSignInUserSession()
+                        .getIdToken()
+                            .getJwtToken(session),
+                    listId
+                )
+            }
+        );
+        return getMyListCall$;
     }
     
-    createList(myNewList: List) {
+    createMyList(myNewList: List) {
+        const myThis = this;
         
         let payload = {
             "listid": myNewList.listid,
@@ -43,27 +61,36 @@ export class ListService {
             "listitems": myNewList.listitems
             }
         
-        const network$ = this.http.post(this.lists_url, 
-            //JSON.stringify({myNewList}),
-            payload,
-            this.setup_opts());
-
-        /*network$.subscribe(
-            () => console.log('HTTP post successful !'),
-            err => console.error(err),
-            () => console.log('monitoring completed ...')
-
-        );*/
-
-        return network$;
+        const createMyListCall$ = this.getAmplifyAuth().flatMap(
+            function (session) {
+                return myThis.createList(
+                    session.getSignInUserSession()
+                        .getIdToken()
+                            .getJwtToken(session),
+                    payload
+                )
+            }
+        );
+        return createMyListCall$;
     }
     
-    deleteList(listId:string) {
-        let setupListDeleteUrl = this.lists_url + '/' + listId;
-        return this.http.delete(setupListDeleteUrl, this.setup_opts());
+    deleteMyList(listId:string) {
+        const myThis = this;
+        const deleteMyListCall$ = this.getAmplifyAuth().flatMap(
+            function (session) {
+                return myThis.deleteList(
+                    session.getSignInUserSession()
+                        .getIdToken()
+                            .getJwtToken(session),
+                    listId
+                )
+            }
+        );
+        return deleteMyListCall$;
     }
     
-    updateList(updateThisList: List) {
+    updateMyList(updateThisList: List) {
+        const myThis = this;
         // Since we have the complete list object at hand, pull id for uri build below.
         let setupListUpdateUrl = this.lists_url + '/' + updateThisList.listid;
 
@@ -75,82 +102,83 @@ export class ListService {
                 "listitems": updateThisList.listitems
             }
         
-        const network$ =this.http.put(
-            setupListUpdateUrl, 
+        const updateMyListCall$ = this.getAmplifyAuth().flatMap(
+            function (session) {
+                return myThis.updateList(
+                    session.getSignInUserSession()
+                        .getIdToken()
+                            .getJwtToken(session),
+                    updateThisList.listid,
+                    payload
+                )
+            }
+        );
+        return updateMyListCall$;
+    }
+    
+    getAllLists(token: any): Observable<List[]> {
+        return this.http.get(
+            this.lists_url, 
+            this.setupHeaders(token))
+                .map(res => res.json())
+                .catch(this.handleError);
+    }
+    
+    private getList(token: any, listId:string): Observable<List> {
+        return this.http.get(
+            this.lists_url + '/' + listId, 
+            this.setupHeaders(token))
+                .map(res => res.json())
+                .catch(this.handleError
+            );
+    }
+    
+    private createList(token: any, payload:any): Observable<List> {
+        return this.http.post(
+            this.lists_url,
             payload,
-            this.setup_opts());
-        
-        return network$;
+            this.setupHeaders(token))
+                .map(res => res.json())
+                .catch(this.handleError
+            );
     }
     
-    private setup_headers() {
-        let headers = new Headers();  
-        headers.append('Authorization', this.getAuth());
-        headers.append('Content-Type', 'application/json');
-        return headers
+    private deleteList(token: any, listId:string): Observable<List> {
+        return this.http.delete(
+            this.lists_url + '/' + listId, 
+            this.setupHeaders(token))
+                .map(res => res.json())
+                .catch(this.handleError
+            );
     }
     
-    private setup_opts() {
+    private updateList(token: any, listId:string, payload:any): Observable<List> {
+        return this.http.put(
+            this.lists_url + '/' + listId,
+            payload,
+            this.setupHeaders(token))
+                .map(res => res.json())
+                .catch(this.handleError
+            );
+    }
+    
+    private getAmplifyAuth(): Observable<any> {
+        const auth$ = this.authService.isAuthenticated();
+        return auth$;
+    }
+    
+    private setupHeaders(token) {
         let opts = new RequestOptions();
-        opts.headers = this.setup_headers();
+        let headers = new Headers();  
+        headers.append('Authorization', token);
+        headers.append('Content-Type', 'application/json');
+        opts.headers = headers;
         return opts
-    }
-    
-    private getAuth() {
-        let auth = '';
-        // pull from local if valid, otherwise reauth.
-        let myCognitoUser = this.awscogusermgrService.checkSession();
-        auth = myCognitoUser.signInUserSession.getIdToken().getJwtToken();
-        return auth
-    }
-    
-    private extractData(res: Response): Observable<List[]> {
-	    let body = res.json();
-	    //console.log(body)
-        return body;
     }
     
     private handleError (error: Response | any) {
 	    console.error(error.message || error);
 	    return Observable.throw(error.status);
     }
-    
-/*
-    findCourseById(courseId: number): Observable<Course> {
-        return this.http.get<Course>(`/api/courses/${courseId}`);
-    }
 
-    findAllCourses(): Observable<Course[]> {
-        return this.http.get('/api/courses')
-            .pipe(
-                map(res => res['payload'])
-            );
-    }
-
-    findAllCourseLessons(courseId:number): Observable<Lesson[]> {
-        return this.http.get('/api/lessons', {
-            params: new HttpParams()
-                .set('courseId', courseId.toString())
-                .set('pageNumber', "0")
-                .set('pageSize', "1000")
-        }).pipe(
-            map(res =>  res["payload"])
-        );
-    }
-
-    findLessons(
-        courseId:number, filter = '', sortOrder = 'asc', pageNumber = 0, pageSize = 3):  Observable<Lesson[]> {
-
-        return this.http.get('/api/lessons', {
-            params: new HttpParams()
-                .set('courseId', courseId.toString())
-                .set('filter', filter)
-                .set('sortOrder', sortOrder)
-                .set('pageNumber', pageNumber.toString())
-                .set('pageSize', pageSize.toString())
-        }).pipe(
-            map(res =>  res["payload"])
-        );
-    }
-*/
 }

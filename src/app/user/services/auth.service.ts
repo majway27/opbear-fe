@@ -8,7 +8,6 @@ import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
 import Amplify, { Auth } from 'aws-amplify';
-import { Userprop } from '../userprop/userprop';
 
 @Injectable()
 export class AuthService {
