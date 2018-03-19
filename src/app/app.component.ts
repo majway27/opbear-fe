@@ -19,11 +19,14 @@ export class AppComponent implements OnInit {
       .subscribe(
         result => {
           this.loggedIn = true;
+          //console.log("AC Logged in: " + this.authService.isLoggedIn);
         },
         error => {
           console.log(error);
-          return false;  //overkill
+          //console.log("AC Logged in: " + this.authService.isLoggedIn);
         });
+
+    //this.loggedIn = this.authService.isLoggedIn;
   }
   
 }

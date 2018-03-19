@@ -14,11 +14,12 @@ export class DashboardComponent {
   myUser = "";
   loggedIn = false;
 
-  constructor( private authservice: AuthService ) { }
+  constructor( private authService: AuthService ) { }
   
   ngOnInit(): void {
-
-    this.authservice.isAuthenticated()
+    this.loggedIn = this.authService.isLoggedIn;
+    //console.log("DC Logged in: " + this.authService.isLoggedIn);
+    /*this.authservice.isAuthenticated()
       .subscribe(
         result => {
           //console.log(result);
@@ -28,7 +29,7 @@ export class DashboardComponent {
         error => {
           console.log(error);
           return false;
-        });
+        });*/
   }
 
 }

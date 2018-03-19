@@ -15,25 +15,21 @@ export class ProfileComponent implements OnInit {
   userprops: Userprop[];
   errorMessage: String;
   myUserName = "";
+  //userprops = [];
+  
 
   constructor(
     private authService: AuthService ) { 
   }
 
   ngOnInit() {
-    this.authService.isAuthenticated()
+    this.authService.myUserDetails()
       .subscribe(
         result => {
+          console.log(result);
           this.myUserName = result.username;
-          this.authService.myUserDetails(result)
-              .subscribe(
-                result => {
-                  console.log(result);
-                  this.userprops = result;
-                },
-                error => {
-                    console.log(error);
-                });
+          const myProp = new Userprop("ID",result.id);
+          this.userprops = [myProp];
         },
         error => {
           console.log(error);

@@ -20,11 +20,13 @@ export class AuthGuardService implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         
         if (!this.authService.isLoggedIn) {
-            //console.log("No User in Local Storage");
+            //console.log("special: not logged in");
             this.router.navigate(['/login']);
         }
         // Should only get here if user is logged in
-        return this.authService.isLoggedIn;
+        //console.log("auth guard good");
+        //return this.authService.isLoggedIn;
+        return true;
     }
 
 }

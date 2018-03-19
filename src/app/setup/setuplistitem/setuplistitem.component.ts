@@ -39,9 +39,17 @@ export class SetuplistitemComponent implements OnInit {
   }
   
   getListItems(listId:string): void {
-    this.myListObs = this.listService.getMyList(listId);
-    this.myListObs.subscribe(
-      list => this.setListHelper(list)
+    console.log("Starting list item get")
+    //this.myListObs = this.listService.getMyList(listId);
+    const myListItems$ = this.listService.getMyList(listId);
+    myListItems$.subscribe(
+      result => {
+          this.setListHelper(result.data);
+          console.log(result);
+        },
+        error => {
+          console.log(error);
+        }
     );
   }
   

@@ -15,7 +15,7 @@ import { ListService } from './services/list.service';
 })
 export class SetupComponent implements OnInit {
 
-  allLists$: Observable<List[]>
+  //allLists$: Observable<List[]>
   
   activelists: List[];
   lockedlists: List[];
@@ -40,16 +40,16 @@ export class SetupComponent implements OnInit {
 	}
 	
 	refreshList() {
-	  this.allLists$ = this.listService.getAllMyLists();
-    this.allLists$.subscribe(
-      lists => this.activelists = lists.filter(function (el) {return el.status==="active"}),
-      //lists => console.log(lists)
-    );
-    this.allLists$.subscribe(
-      lists => this.lockedlists = lists.filter(function (el) {return el.status==="locked"}),
-    );
-    this.allLists$.subscribe(
-      lists => this.archivedlists = lists.filter(function (el) {return el.status==="archived"}),
+	  const allLists$ = this.listService.getAllMyLists();
+    allLists$.subscribe(
+      result => {
+        this.activelists = result.data.filter(function (el) {return el.status==="active"});
+        this.lockedlists = result.data.filter(function (el) {return el.status==="locked"});
+        this.archivedlists = result.data.filter(function (el) {return el.status==="archived"});
+      },
+      error => {
+        console.log(error);
+      }
     );
 	}
 	

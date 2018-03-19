@@ -1,6 +1,8 @@
 import { Component, ElementRef, AfterViewInit } from '@angular/core';
 declare const gapi: any;
 
+import { AuthService } from '../services/auth.service';
+
 @Component({
   selector: 'google-signin',
   templateUrl: './google-signin.component.html',
@@ -33,12 +35,19 @@ export class GoogleSigninComponent implements AfterViewInit {
       function (googleUser) {
 
         let profile = googleUser.getBasicProfile();
-        console.log('Token || ' + googleUser.getAuthResponse().id_token);
+        /*console.log('Token: ' + googleUser.getAuthResponse().id_token);
         console.log('ID: ' + profile.getId());
         console.log('Name: ' + profile.getName());
         console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail());
-        //YOUR CODE HERE
+        console.log('Email: ' + profile.getEmail());*/
+        
+        const auth_obj = {};
+        auth_obj['token'] = googleUser.getAuthResponse().id_token;
+        auth_obj['expires_at'] = googleUser.getAuthResponse().expires_at;
+        //console.log(profile)
+        profile.id = profile.getId();
+        profile.username = profile.getEmail();
+        that.authService.googleLogin(auth_obj,profile)
 
 
       }, function (error) {
@@ -46,8 +55,11 @@ export class GoogleSigninComponent implements AfterViewInit {
       });
   }
 
-  constructor(private element: ElementRef) {
-    console.log('ElementRef: ', this.element);
+  constructor(
+    private element: ElementRef,
+    private authService: AuthService
+    ) {
+    //console.log('ElementRef: ', this.element);
   }
 
   ngAfterViewInit() {

@@ -1,5 +1,5 @@
 import { environment } from '../../../environments/environment';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
@@ -7,7 +7,7 @@ import { fromPromise } from 'rxjs/observable/fromPromise';
 import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
-import Amplify, { Auth } from 'aws-amplify';
+import Amplify, { Auth, Cache } from 'aws-amplify';
 
 @Injectable()
 export class AuthService {
@@ -16,16 +16,16 @@ export class AuthService {
     // store the URL so we can redirect after logging in
     redirectUrl: string;
     
-    constructor( private router: Router ) { 
+    constructor( private router: Router, private zone:NgZone ) { 
         Amplify.configure(environment.obamplify)
         
         // Cover edge case of when browser has hard refresh by logged in user.
-        if (localStorage.getItem('ob.username')) {
+        /*if (localStorage.getItem('ob.username')) {
             console.log("Initializing Logged in User");
             this.login(
                 localStorage.getItem('ob.username'),
                 localStorage.getItem('ob.password'));
-        }
+        }*/
     }
     
     signup(email, password) {
@@ -98,45 +98,41 @@ export class AuthService {
     
     /* ToDo: add updateAttributes functionality to enable changing email address */
     
-    rememberme() {
-        fromPromise(Auth.signIn(
-            localStorage.getItem('ob.username'),
-            localStorage.getItem('ob.password')
-            )).subscribe(
-                result => {
-                    this.isLoggedIn = true;    
-                    this.goHome();
-                },
-                error => {
-                    console.log(error);
-                    console.log("There was a problem with the Auth Service or local cached credentials");
-                    // Prevent a look condition.  Annoying if Cognito is down(unlikely).
-                    localStorage.removeItem('ob.username');
-                    localStorage.removeItem('ob.password');
-                    this.router.navigate(['login']);
-                });
-    }
-    
     login(email, password) {
         fromPromise(Auth.signIn(email, password))
             .subscribe(
                 result => {
                     this.isLoggedIn = true;    
-                    // Hang onto these in case page has full refresh.
+                    /*// Hang onto these in case page has full refresh.
                     // Also capture on each successful login in case this is a new device.
                     localStorage.setItem('ob.username', email);
-                    localStorage.setItem('ob.password', password);
-                    this.goHome();
+                    localStorage.setItem('ob.password', password); */
+                    this.zone.run(() => this.router.navigate(['/']));
                 },
                 error => {
                     console.log(error);
                 });
     }
     
-    googleLogin() { return true }
+    googleLogin(response:any,userAttributesObj:any) {
+        fromPromise(Auth.federatedSignIn(
+            "google",
+            response,
+            userAttributesObj
+            )).subscribe(
+                result => {
+                    //console.log("Google Login, go home")
+                    this.isLoggedIn = true;    
+                    // Fix for ngInit() not being fired on router load post gapi, gauth action.
+                    this.zone.run(() => this.router.navigate(['/']));
+                },
+                error => {
+                    console.log(error);
+                });
+    }
     
-    myUserDetails(cognitoUser): any {
-        return fromPromise(Auth.userAttributes(cognitoUser));
+    myUserDetails(): any {
+        return fromPromise(Auth.currentUserInfo());
     }
     
     logout() {
@@ -145,22 +141,43 @@ export class AuthService {
                 result => {
                     this.isLoggedIn = false;
                     // Clear these
-                    localStorage.removeItem('ob.username');
-                    localStorage.removeItem('ob.password');
+                    /*localStorage.removeItem('ob.username');
+                    localStorage.removeItem('ob.password');*/
                     this.router.navigate(['/login']);
                 },
                 error => console.log(error)
             );
     }
     
+    refreshCredentials(): Observable<any> {
+        return fromPromise(Auth.currentCredentials());
+    }
+    
     isAuthenticated(): Observable<any> {
-        console.log("Checking currentAuthenticatedUser")
+        //console.log("Checking currentAuthenticatedUser, current credentials source: " + Auth.credentials_source)
         return fromPromise(Auth.currentAuthenticatedUser());
     }
     
-    /*getUserName(): Observable<any> {
-        return fromPromise(Auth.currentUserInfo());
-    }*/
+    userFromLocalStorage() {
+        const federatedInfo = Cache.getItem('federatedInfo');
+        if (federatedInfo) {
+            console.log("Google User was set locally");
+            this.isLoggedIn = true;
+            this.goHome();  
+        } else {
+            const cognitoStorage$ = fromPromise(Auth.currentUserPoolUser())
+            cognitoStorage$.subscribe(
+                result => {
+                    console.log("Cog User was set locally")
+                    this.isLoggedIn = true;
+                    this.goHome();
+                },
+                error => {
+                    console.log("No locally stored user for any identity provider");
+                }
+            );
+        }
+    }
     
     goHome() {
         this.router.navigate(['dashboard']);

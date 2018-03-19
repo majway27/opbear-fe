@@ -22,10 +22,7 @@
         "styles-theme.scss",
         "styles.css"
       ],
-      "scripts": [
-        "assets/aws-cognito-sdk.min.js",
-        "assets/amazon-cognito-identity.min.js"
-      ],
+      "scripts": [],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

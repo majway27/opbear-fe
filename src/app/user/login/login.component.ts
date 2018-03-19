@@ -14,12 +14,11 @@ export class LoginComponent implements OnInit {
   
   ngOnInit() {
     // Auto-login if creds are present in local storage
-    if (localStorage.getItem('ob.username')) {
-      this.authService.rememberme();
-    }
+    this.authService.userFromLocalStorage();
   }
 
   login(username,password) {
+    console.log("First Time Login: true")
     this.authService.login(username,password)
   }
 }
