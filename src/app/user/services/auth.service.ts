@@ -80,24 +80,6 @@ export class AuthService {
                 });
     }
 
-    /* ToDo: Refactor for a "Remember Me" checkbox.  
-      Better for users who might close the window 
-      instead of logging out, for public machines, etc.
-    */
-    
-    /* ToDo: Snackbars for each successful state change.  
-      Also for rememberme execution, notifying user to 
-      logout to clear creds on pub machine, etc.
-    */
-    
-    /* ToDo: Improve validation on signup.
-      min 8 char
-      lowercase letter
-      Need to provide guidance and feedback on entering valid password
-    */
-    
-    /* ToDo: add updateAttributes functionality to enable changing email address */
-    
     login(email, password) {
         fromPromise(Auth.signIn(email, password))
             .subscribe(

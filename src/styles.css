@@ -119,3 +119,13 @@
     color: #e3e3df;
   }
 }
+
+.ob-login-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ob-login-container > * {
+  width: 100%;
+}

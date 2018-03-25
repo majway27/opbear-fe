@@ -1,22 +1,58 @@
-<div class="login jumbotron center-block">
-    
-    <h1>Sign Up</h1>
-    
-    <div class="form-group">
-        <label for="username">Username</label>
-        <input [formControl]="usernamefc" type="text" #username class="form-control" id="username" placeholder="Username">
-        <label for="password">Password</label>
-        <input [formControl]="passwordfc" type="password" #password class="form-control" id="password" placeholder="Password">
-     </div>
-    
-     <div>
-       <button (click)="submitSignUpValues()" class="btn btn-default">Submit</button>
-       <button (click)="resetSignUp()" class="btn btn-default">Reset</button>
-     </div> 
-    
-    <div>
-        <p *ngIf='usernamefc.value'>Validation Status: <b>{{ usernamefc.status }}</b></p>
-    </div> 
-    
-    
-</div>
+<mat-card class="ob-card-apex md-elevation-z6">
+  
+  <mat-card-title class="thinner">
+    <div class="ob-menu-control">
+        <span>Sign Up
+            <mat-icon color="primary" class="ob-card-apex-icon">person_add</mat-icon>
+        </span>
+    </div>
+  </mat-card-title>
+  
+    <mat-card-content>
+        <mat-card class="ob-card md-elevation-z12">
+            <mat-card-header>
+              <img mat-card-avatar src="assets/rv8.png">
+              <mat-card-title>Account Creation</mat-card-title>
+              <mat-card-subtitle>Please provide an email address and valid password (see below)</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <form role="form" (submit)="login(username.value, password.value)">
+                    <div class="ob-login-container">
+                        <mat-form-field >
+                            <input matInput type="text" #username class="ob-form-input" id="username" placeholder="Email" [formControl]="usernamefc">
+                        </mat-form-field>
+                        <mat-form-field >
+                            <input matInput type="password" #password class="ob-form-input" id="password" placeholder="Password" [formControl]="passwordfc">
+                        </mat-form-field>
+                        <button mat-raised-button (click)="submitSignUpValues()" color="primary">Submit</button>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="ob-card md-elevation-z12">
+            <mat-card-header>
+              <img mat-card-avatar src="assets/rv8.png">
+              <mat-card-title>Account Creation</mat-card-title>
+              <mat-card-subtitle>Accessing this application constitutes acceptance of the below policies:</mat-card-subtitle>
+              <mat-card-subtitle>https://optimisticbearings.majway.com/privacy/</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="ob-card md-elevation-z12">
+            <mat-card-header>
+              <img mat-card-avatar src="assets/rv8.png">
+              <mat-card-title>Valid Password</mat-card-title>
+              <mat-card-subtitle>Valid passwords must observe the following criteria:</mat-card-subtitle>
+              <mat-card-subtitle>Requires Numbers, Special Characters, Upper and Lowercase letters, minimum length 8 characters</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div>
+                    <p color="primary" *ngIf='usernamefc.value'>Validation Status: <b>{{ usernamefc.status }}</b></p>
+                    <p color="warn" *ngIf='!usernamefc.value'>Validation Status: <b>Invalid</b></p>
+                </div> 
+            </mat-card-content>
+        </mat-card>
+    </mat-card-content>
+  
+</mat-card>

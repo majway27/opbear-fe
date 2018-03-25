@@ -1,23 +1,69 @@
-<div class="login jumbotron center-block">
-    
-    <h1>Login</h1>
-    
-    <form role="form" (submit)="login(username.value, password.value)">
-        
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" #username class="form-control" id="username" placeholder="">
-        </div>
-        
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" #password class="form-control" id="password" placeholder="">
-        </div>
-        
-        <button type="submit" class="btn btn-default">Submit</button>
-        
-    </form>
-    
-    <google-signin></google-signin>
-    
-</div>
+<mat-card class="ob-card-apex md-elevation-z6">
+  
+  <mat-card-title class="thinner">
+    <div class="ob-menu-control">
+        <span>Login
+            <mat-icon color="primary" class="ob-card-apex-icon">input</mat-icon>
+        </span>
+    </div>
+  </mat-card-title>
+  
+  <mat-card-content>
+    <mat-tab-group>
+      <mat-tab label="IDP">
+        <mat-list>
+          <div>
+            <mat-card class="ob-card md-elevation-z12">
+            <mat-card-content>
+                <google-signin></google-signin>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="ob-card md-elevation-z12">
+            <mat-card-header>
+              <img mat-card-avatar src="assets/rv8.png">
+              <mat-card-title>First Time Login?</mat-card-title>
+              <mat-card-subtitle>Accessing this application constitutes acceptance of the below policies:</mat-card-subtitle>
+              <mat-card-subtitle>https://optimisticbearings.majway.com/privacy/</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+            </mat-card-content>
+          </mat-card>
+          </div>
+        </mat-list>
+      </mat-tab>
+      
+      <mat-tab label="Email">
+        <mat-card class="ob-card md-elevation-z12">
+            <mat-card-content>
+            <form role="form" (submit)="login(username.value, password.value)">
+                <div class="ob-login-container">
+                    <mat-form-field >
+                        <input matInput type="text" #username class="ob-form-input" id="username" placeholder="Email">
+                    </mat-form-field>
+                    <mat-form-field >
+                        <input matInput type="password" #password class="ob-form-input" id="password" placeholder="Password">
+                    </mat-form-field>
+                    <button mat-raised-button type="submit" color="primary">Login</button>
+                </div>
+            </form>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="ob-card md-elevation-z12">
+            <mat-card-header>
+              <img mat-card-avatar src="assets/rv8.png">
+              <mat-card-title>Create a New Account</mat-card-title>
+              <mat-card-subtitle>You will be asked to provide your email and a password.</mat-card-subtitle>
+              <mat-card-subtitle>Accessing this application constitutes acceptance of the below policies:</mat-card-subtitle>
+              <mat-card-subtitle>https://optimisticbearings.majway.com/privacy/</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="ob-login-container">
+                <button mat-raised-button color="accent" [routerLink]="['/signup']">Signup</button>
+              </div>
+            </mat-card-content>
+        </mat-card>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+  
+</mat-card>
