@@ -30,8 +30,6 @@ export class AppComponent implements OnInit {
           console.log(error);
           //console.log("AC Logged in: " + this.authService.isLoggedIn);
         });
-
-    //this.loggedIn = this.authService.isLoggedIn;
   }
   
   ngOnDestroy() {

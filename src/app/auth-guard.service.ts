@@ -1,4 +1,4 @@
-import { Injectable }   from '@angular/core';
+import { Injectable, OnDestroy }   from '@angular/core';
 import {
   CanActivate, Router,
   ActivatedRouteSnapshot,
@@ -6,27 +6,35 @@ import {
 }                       from '@angular/router';
 
 import { Observable }   from 'rxjs/Observable';
-import { fromPromise }  from 'rxjs/observable/fromPromise';
+import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService }  from './user/services/auth.service';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
-
+    
+    loggedIn = false;
+    sessionSubscription: Subscription
+    
     constructor( 
         private authService: AuthService,
-        private router: Router ) { }
+        private router: Router ) { 
+            this.sessionSubscription = this.authService.returnSessionSubject()
+                .subscribe(flag => { this.loggedIn = flag; });
+        }
   
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         
-        if (!this.authService.isLoggedIn) {
-            //console.log("special: not logged in");
+        if (!this.loggedIn) {
             this.router.navigate(['/login']);
         }
         // Should only get here if user is logged in
-        //console.log("auth guard good");
-        //return this.authService.isLoggedIn;
         return true;
+    }
+    
+    ngOnDestroy() {
+        // unsubscribe to ensure no memory leaks
+        this.sessionSubscription.unsubscribe();
     }
 
 }
