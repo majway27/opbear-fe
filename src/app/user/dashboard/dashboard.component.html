@@ -13,31 +13,16 @@
   
   <mat-card-content>
         
-        <div *ngIf="!loggedIn">
-          <mat-card class="ob-card md-elevation-z12">
-            <mat-card-header>
-              <img mat-card-avatar src="assets/rv8.png">
-              <mat-card-title>Welcome!</mat-card-title>
-              <mat-card-subtitle></mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-              <p>Please sign in or sign up via links in the upper right.</p>
-            </mat-card-content>
-          </mat-card>
-        </div>
-        
-        <div *ngIf="loggedIn">
-          <mat-card class="ob-card md-elevation-z12">
-            <mat-card-header>
-              <img mat-card-avatar src="assets/rv8.png">
-              <mat-card-title>Welcome!</mat-card-title>
-              <mat-card-subtitle>{{ myUser }}</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-              <p>Please choose an item from the upper-left menu.</p>
-            </mat-card-content>
-          </mat-card>
-        </div>
+        <mat-card class="ob-card md-elevation-z12">
+          <mat-card-header>
+            <img mat-card-avatar src="assets/rv8.png">
+            <mat-card-title>Welcome!</mat-card-title>
+            <mat-card-subtitle>{{ myUserName }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>Please choose an item from the upper-left menu.</p>
+          </mat-card-content>
+        </mat-card>
         
         <mat-card class="ob-card md-elevation-z12">
           <mat-card-header>

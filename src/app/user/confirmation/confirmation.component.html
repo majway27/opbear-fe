@@ -1,19 +1,47 @@
-<div class="login jumbotron center-block">
-    
-    <h1>Email Confirmation</h1>
-    
-     <div class="form-group">
-        <label for="confirmationcode">Enter Emailed Confirmation Code</label>
-        <input [formControl]="confirmationCode" type="text" #confirmationcode class="form-control" id="confirmationcode" placeholder="123456">
-     </div>
-    
-     <div>
-       <button (click)="submitCodeValue()" class="btn btn-default">Submit</button>
-       <button (click)="regenerateMyConfirmationCode()" class="btn btn-default">Resend Code</button>
-     </div> 
-    
-    <div>
-        <p *ngIf='confirmationCode.value'>Validation Status: <b>{{ confirmationCode.status }}</b></p>
-    </div> 
-    
-</div>
+<mat-card class="ob-card-apex md-elevation-z6">
+  
+  <mat-card-title class="thinner">
+    <div class="ob-menu-control">
+        <span>Email Confirmation
+            <mat-icon color="primary" class="ob-card-apex-icon">person_add</mat-icon>
+        </span>
+    </div>
+  </mat-card-title>
+  
+    <mat-card-content>
+        <mat-card class="ob-card md-elevation-z12">
+            <mat-card-header>
+              <img mat-card-avatar src="assets/rv8.png">
+              <mat-card-title>Confirmation</mat-card-title>
+              <mat-card-subtitle>A code will be emailed to you, enter below</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <form role="form">
+                    <div class="ob-login-container">
+                        <mat-form-field >
+                            <input [formControl]="confirmationCode" matInput type="text" #confirmationcode class="ob-form-input" id="confirmationcode" placeholder="123456">
+                        </mat-form-field>
+                        <button mat-raised-button (click)="submitCodeValue()" color="primary">Submit</button>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="ob-card md-elevation-z12">
+            <mat-card-header>
+              <img mat-card-avatar src="assets/rv8.png">
+              <mat-card-title>Problems Confirming Account?</mat-card-title>
+              <mat-card-subtitle>Use the button below to resend a new code</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div>
+                    <p *ngIf='confirmationCode.value'>Validation Status: <b>{{ confirmationCode.status }}</b></p>
+                    <p *ngIf='!confirmationCode.value'>Validation Status: <b>Invalid</b></p>
+                    <div class="ob-login-container">
+                        <button mat-raised-button (click)="regenerateMyConfirmationCode()" color="accent">Resend</button>
+                    </div>
+                </div> 
+            </mat-card-content>
+        </mat-card>
+    </mat-card-content>
+  
+</mat-card>

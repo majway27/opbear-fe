@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService } from '../services/auth.service';
 
@@ -11,25 +12,20 @@ import { AuthService } from '../services/auth.service';
 export class DashboardComponent { 
  
   title = 'Optimistic Bearings - Home';
-  myUser = "";
-  loggedIn = false;
+  myUserName = "";
 
   constructor( private authService: AuthService ) { }
   
   ngOnInit(): void {
-    this.loggedIn = this.authService.isLoggedIn;
-    //console.log("DC Logged in: " + this.authService.isLoggedIn);
-    /*this.authservice.isAuthenticated()
+    this.authService.myUserDetails()
       .subscribe(
         result => {
-          //console.log(result);
-          this.loggedIn = true;
-          this.myUser = result.username;
+          //console.log(result.username);
+          this.myUserName = result.username;
         },
         error => {
           console.log(error);
-          return false;
-        });*/
+        });
   }
 
 }

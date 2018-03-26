@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatAutocompleteModule, MatButtonModule, MatButtonToggleModule, 
 MatCardModule, MatCheckboxModule, MatChipsModule, MatDatepickerModule, 
-MatDialogModule, MatExpansionModule, MatGridListModule, MatIconModule, 
+MatDialogModule, MatExpansionModule, MatGridListModule, MatIconModule,
 MatInputModule, MatListModule, MatMenuModule, MatNativeDateModule, 
 MatPaginatorModule, MatProgressBarModule, MatProgressSpinnerModule, 
 MatRadioModule, MatRippleModule, MatSelectModule, MatSidenavModule, 
@@ -56,7 +56,7 @@ import { SignupComponent } from './user/signup/signup.component';
     FormsModule,
     HttpModule,
     MatButtonModule,MatButtonToggleModule,MatDialogModule, MatSnackBarModule,
-    MatCardModule,
+    MatCardModule, MatChipsModule,
     MatCheckboxModule,
     MatGridListModule,MatListModule,
     MatIconModule,

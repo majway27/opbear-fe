@@ -15,7 +15,6 @@ export class ProfileComponent implements OnInit {
   userprops: Userprop[];
   errorMessage: String;
   myUserName = "";
-  //userprops = [];
   
 
   constructor(

@@ -6,18 +6,21 @@ import { Observable } from 'rxjs/Observable';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
+import { Subject } from 'rxjs/Subject';
 
 import Amplify, { Auth, Cache } from 'aws-amplify';
 
 @Injectable()
 export class AuthService {
     
-    isLoggedIn = false;
+    //isLoggedIn = false;
+    public isLoggedIn: Subject<boolean>;
     // store the URL so we can redirect after logging in
     redirectUrl: string;
     
     constructor( private router: Router, private zone:NgZone ) { 
         Amplify.configure(environment.obamplify)
+        this.isLoggedIn = new Subject<boolean>();
         
         // Cover edge case of when browser has hard refresh by logged in user.
         /*if (localStorage.getItem('ob.username')) {
@@ -56,7 +59,8 @@ export class AuthService {
             )).subscribe(
                 result => {
                     console.log('Confirmation successful, logging in.')
-                    this.router.navigate(['login']);
+                    //this.router.navigate(['login']);
+                    this.login(localStorage.getItem('ob.username'),localStorage.getItem('ob.password'))
                 },
                 error => {
                     console.log(error);
@@ -84,7 +88,8 @@ export class AuthService {
         fromPromise(Auth.signIn(email, password))
             .subscribe(
                 result => {
-                    this.isLoggedIn = true;    
+                    //this.isLoggedIn = true;
+                    this.isLoggedIn.next(true);
                     /*// Hang onto these in case page has full refresh.
                     // Also capture on each successful login in case this is a new device.
                     localStorage.setItem('ob.username', email);
@@ -104,7 +109,8 @@ export class AuthService {
             )).subscribe(
                 result => {
                     //console.log("Google Login, go home")
-                    this.isLoggedIn = true;    
+                    //this.isLoggedIn = true;  
+                    this.isLoggedIn.next(true);
                     // Fix for ngInit() not being fired on router load post gapi, gauth action.
                     this.zone.run(() => this.router.navigate(['/']));
                 },
@@ -121,7 +127,8 @@ export class AuthService {
         fromPromise(Auth.signOut())
             .subscribe(
                 result => {
-                    this.isLoggedIn = false;
+                    //this.isLoggedIn = false;
+                    this.isLoggedIn.next(false);
                     // Clear these
                     /*localStorage.removeItem('ob.username');
                     localStorage.removeItem('ob.password');*/
@@ -140,18 +147,24 @@ export class AuthService {
         return fromPromise(Auth.currentAuthenticatedUser());
     }
     
+    returnSessionSubject(): Observable<boolean> {
+        return this.isLoggedIn.asObservable();   
+    }
+    
     userFromLocalStorage() {
         const federatedInfo = Cache.getItem('federatedInfo');
         if (federatedInfo) {
             console.log("Google User was set locally");
-            this.isLoggedIn = true;
+            //this.isLoggedIn = true;
+            this.isLoggedIn.next(true);
             this.goHome();  
         } else {
             const cognitoStorage$ = fromPromise(Auth.currentUserPoolUser())
             cognitoStorage$.subscribe(
                 result => {
                     console.log("Cog User was set locally")
-                    this.isLoggedIn = true;
+                    //this.isLoggedIn = true;
+                    this.isLoggedIn.next(true);
                     this.goHome();
                 },
                 error => {

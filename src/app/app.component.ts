@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService } from './user/services/auth.service';
 
@@ -11,8 +12,12 @@ export class AppComponent implements OnInit {
   
   title = 'Optimistic Bearings';
   loggedIn = false;
+  sessionSubscription: Subscription
   
-  constructor( private authService: AuthService ) { }
+  constructor( private authService: AuthService ) { 
+    this.sessionSubscription = this.authService.returnSessionSubject()
+      .subscribe(flag => { this.loggedIn = flag; });
+  }
   
   ngOnInit(): void {
     this.authService.isAuthenticated()
@@ -27,6 +32,11 @@ export class AppComponent implements OnInit {
         });
 
     //this.loggedIn = this.authService.isLoggedIn;
+  }
+  
+  ngOnDestroy() {
+      // unsubscribe to ensure no memory leaks
+      this.sessionSubscription.unsubscribe();
   }
   
 }

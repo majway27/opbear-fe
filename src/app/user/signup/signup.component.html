@@ -11,18 +11,31 @@
     <mat-card-content>
         <mat-card class="ob-card md-elevation-z12">
             <mat-card-header>
+                <img mat-card-avatar src="assets/rv8.png">
+                <mat-card-title>Account Creation</mat-card-title>
+                <mat-card-subtitle>Accessing this application constitutes acceptance of the below policies:</mat-card-subtitle>
+                <mat-card-subtitle>
+                    <a mat-raised-button href="https://optimisticbearings.majway.com/privacy/" target="blank" color="primary" class="ob-social-button-spacer-bottom">Privacy</a>
+                    <a mat-raised-button href="https://optimisticbearings.majway.com/privacy/" target="blank" color="primary">Acceptable Use</a>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="ob-card md-elevation-z12">
+            <mat-card-header>
               <img mat-card-avatar src="assets/rv8.png">
               <mat-card-title>Account Creation</mat-card-title>
               <mat-card-subtitle>Please provide an email address and valid password (see below)</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <form role="form" (submit)="login(username.value, password.value)">
+                <form role="form">
                     <div class="ob-login-container">
                         <mat-form-field >
-                            <input matInput type="text" #username class="ob-form-input" id="username" placeholder="Email" [formControl]="usernamefc">
+                            <input [formControl]="usernamefc" matInput type="text" #username class="ob-form-input" id="username" placeholder="Email" >
                         </mat-form-field>
                         <mat-form-field >
-                            <input matInput type="password" #password class="ob-form-input" id="password" placeholder="Password" [formControl]="passwordfc">
+                            <input [formControl]="passwordfc" matInput type="password" #password class="ob-form-input" id="password" placeholder="Password" >
                         </mat-form-field>
                         <button mat-raised-button (click)="submitSignUpValues()" color="primary">Submit</button>
                     </div>
@@ -32,27 +45,23 @@
         <mat-card class="ob-card md-elevation-z12">
             <mat-card-header>
               <img mat-card-avatar src="assets/rv8.png">
-              <mat-card-title>Account Creation</mat-card-title>
-              <mat-card-subtitle>Accessing this application constitutes acceptance of the below policies:</mat-card-subtitle>
-              <mat-card-subtitle>https://optimisticbearings.majway.com/privacy/</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-            </mat-card-content>
-        </mat-card>
-        <mat-card class="ob-card md-elevation-z12">
-            <mat-card-header>
-              <img mat-card-avatar src="assets/rv8.png">
               <mat-card-title>Valid Password</mat-card-title>
-              <mat-card-subtitle>Valid passwords must observe the following criteria:</mat-card-subtitle>
-              <mat-card-subtitle>Requires Numbers, Special Characters, Upper and Lowercase letters, minimum length 8 characters</mat-card-subtitle>
+              <mat-card-subtitle>Must observe the following required criteria:</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
+                <mat-chip-list class="mat-chip-list-stacked" aria-orientation="vertical">
+                  <mat-chip color="accent">Numbers</mat-chip>
+                  <mat-chip color="accent">Special Characters</mat-chip>
+                  <mat-chip color="accent">Upper and Lowercase letters</mat-chip>
+                  <mat-chip color="accent">Minimum length 8 characters</mat-chip>
+                </mat-chip-list>
                 <div>
                     <p color="primary" *ngIf='usernamefc.value'>Validation Status: <b>{{ usernamefc.status }}</b></p>
                     <p color="warn" *ngIf='!usernamefc.value'>Validation Status: <b>Invalid</b></p>
                 </div> 
             </mat-card-content>
+            
         </mat-card>
+        
     </mat-card-content>
-  
 </mat-card>

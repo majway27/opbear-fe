@@ -129,3 +129,11 @@
 .ob-login-container > * {
   width: 100%;
 }
+
+.ob-social-button-spacer-left {
+    padding-left: 5px
+}
+
+.ob-social-button-spacer-bottom {
+    margin-bottom: 10px !important
+}

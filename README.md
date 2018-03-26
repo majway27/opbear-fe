@@ -6,7 +6,6 @@
 
 ## Deps
 - hammerjs
-- angular2-jwt
 - @angular/material
 - @angular/cdk
 - @angular/animations
